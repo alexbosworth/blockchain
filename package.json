@@ -20,7 +20,7 @@
     "url": "https://github.com/alexbosworth/blockchain.git"
   },
   "scripts": {
-    "test": "tap -j 2 --branches=1 --functions=1 --lines=1 --statements=1 -t 200 test/numbers/*.js"
+    "test": "tap -j 2 --branches=1 --functions=1 --lines=1 --statements=1 -t 200 test/hashes/*.js test/numbers/*.js"
   },
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
