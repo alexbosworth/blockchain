@@ -1,0 +1,26 @@
+{
+  "author": {
+    "name": "Alex Bosworth",
+    "url": "https://twitter.com/alexbosworth"
+  },
+  "bugs": {
+    "url": "https://github.com/alexbosworth/blockchain/issues"
+  },
+  "description": "Blockchain data utility methods",
+  "devDependencies": {
+    "@alexbosworth/tap": "15.0.12"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "MIT",
+  "name": "@alexbosworth/blockchain",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexbosworth/blockchain.git"
+  },
+  "scripts": {
+    "test": "tap -j 2 --branches=1 --functions=1 --lines=1 --statements=1 -t 200 test/numbers/*.js"
+  },
+  "version": "1.0.0"
+}
