@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+- Add `idForBlock`: to calculate the block id given a hex encoded block
+
 ## 1.1.0
 
 - Add `noLocktimeIdForTransaction` for a hash that doesn't cover the locktime
