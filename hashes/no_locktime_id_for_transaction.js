@@ -9,7 +9,7 @@ const byteCountInt32 = 4;
 const byteCountInt64 = 8;
 const byteCountMarkerFlag = 2;
 const byteCountNoMarkerFlag = 0;
-const decodeCompactInt = (b, o) => compactIntAsNumber({encoded: b, offset: o});
+const decodeCompactInt = (b, o) => compactIntAsNumber({encoded: b, start: o});
 const defaultStartIndex = 0;
 const defaultWitnessCount = 0;
 const {isBuffer} = Buffer;

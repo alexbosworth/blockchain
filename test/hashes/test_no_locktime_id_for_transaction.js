@@ -16,7 +16,7 @@ const tests = [
     },
     description: 'No locktime id converted at zero locktime',
     expected: {
-      id: 'e0041a8488ac2a4b80da897ce88e95b054988c6907c0a9355354133fe86b90ef',
+      id: '341db42c1d42e468b34f7c1f4b02af6932baa2760ad777c557e4e432a61535d0',
     },
   },
   {
@@ -25,7 +25,7 @@ const tests = [
     },
     description: 'No locktime id converted at non zero locktime',
     expected: {
-      id: 'e0041a8488ac2a4b80da897ce88e95b054988c6907c0a9355354133fe86b90ef',
+      id: '341db42c1d42e468b34f7c1f4b02af6932baa2760ad777c557e4e432a61535d0',
     },
   },
   {
@@ -34,7 +34,7 @@ const tests = [
     },
     description: 'A non-segwit transaction is converted',
     expected: {
-      id: '4bc29bad70d01853a167507beffd38a03db5da565de4645ac576824ce87c9934',
+      id: '9eaa27ed0730c9de294d8539525af0f79379961c76e99362410850b122ed3bc9',
     },
   },
 ];

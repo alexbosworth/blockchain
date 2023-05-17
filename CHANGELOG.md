@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- `noLocktimeIdForTransaction`: Fix id derivation to correct value
+
 ## 1.2.0
 
 - Add `idForBlock`: to calculate the block id given a hex encoded block
