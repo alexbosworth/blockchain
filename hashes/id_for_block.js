@@ -7,7 +7,7 @@ const hexAsBuffer = hex => Buffer.from(hex, 'hex');
 const isHex = n => !!n && !(n.length % 2) && /^[0-9A-F]*$/i.test(n);
 const sha256 = preimage => createHash('sha256').update(preimage).digest();
 
-/** Get an id for a block
+/** Get an id for a block: the double sha256 hash of the block header
 
   {
     block: <Hex Encoded Block Data String>
@@ -18,7 +18,7 @@ const sha256 = preimage => createHash('sha256').update(preimage).digest();
 
   @returns
   {
-    id: <Block Hex String>
+    id: <Block Id Hex Encoded String>
   }
 */
 module.exports = ({block}) => {

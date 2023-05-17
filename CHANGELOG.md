@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- `componentsOfTransaction`: Parse transaction hex into its component elements
+
 ## 1.2.1
 
 - `noLocktimeIdForTransaction`: Fix id derivation to correct value

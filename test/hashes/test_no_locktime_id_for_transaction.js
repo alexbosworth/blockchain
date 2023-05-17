@@ -8,7 +8,7 @@ const tests = [
   {
     args: {},
     description: 'A data buffer with a transaction is required',
-    error: 'ExpectedDataBufferToGetNoLocktimeIdForTransaction',
+    error: 'ExpectedDataBufferToReadTransactionDataOutOf',
   },
   {
     args: {
