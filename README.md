@@ -104,3 +104,19 @@ Convert a number to compact size integer serialization
     {
       encoded: <Serialized Compact Integer Buffer Object>
     }
+
+### scriptElementsAsScript
+
+Map array of script buffer elements to a fully formed script
+
+    {
+      elements: [<Data Buffer>, <Script OP_CODE Number>]
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      script: <Script Hex String>
+    }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+- `scriptElementsAsScript`: Convert an array of script elements to a script
+
 ## 1.3.0
 
 - `componentsOfTransaction`: Parse transaction hex into its component elements
