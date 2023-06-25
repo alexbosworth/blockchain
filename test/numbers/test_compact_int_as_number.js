@@ -1,4 +1,6 @@
-const {test} = require('@alexbosworth/tap');
+const {deepStrictEqual} = require('node:assert').strict;
+const {throws} = require('node:assert').strict;
+const test = require('node:test');
 
 const {compactIntAsNumber} = require('./../../');
 
@@ -61,7 +63,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({end, strictSame, throws}) => {
+  return test(description, (t, end) => {
     args.encoded = !!args.encoded ? Buffer.from(args.encoded, 'hex') : null;
 
     if (!!error) {
@@ -69,7 +71,7 @@ tests.forEach(({args, description, error, expected}) => {
     } else {
       const res = compactIntAsNumber(args);
 
-      strictSame(res, expected, 'Got expected result');
+      deepStrictEqual(res, expected, 'Got expected result');
     }
 
     return end();

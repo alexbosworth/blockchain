@@ -105,6 +105,22 @@ Convert a number to compact size integer serialization
       encoded: <Serialized Compact Integer Buffer Object>
     }
 
+### scriptAsScriptElements
+
+Map a serialized script into an array of script elements
+
+    {
+      script: <Script Hex String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      [elements]: [<Data Buffer>, <Script OP_CODE Number>]
+    }
+
 ### scriptElementsAsScript
 
 Map array of script buffer elements to a fully formed script

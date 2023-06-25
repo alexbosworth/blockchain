@@ -7,9 +7,6 @@
     "url": "https://github.com/alexbosworth/blockchain/issues"
   },
   "description": "Blockchain data utility methods",
-  "devDependencies": {
-    "@alexbosworth/tap": "15.0.12"
-  },
   "engines": {
     "node": ">=16"
   },
@@ -20,7 +17,7 @@
     "url": "https://github.com/alexbosworth/blockchain.git"
   },
   "scripts": {
-    "test": "tap -j 2 --branches=1 --functions=1 --lines=1 --statements=1 -t 200 test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
+    "test": "npx nyc@latest node --experimental-test-coverage --test test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
   },
-  "version": "1.4.0"
+  "version": "1.5.0"
 }

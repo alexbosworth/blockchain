@@ -1,4 +1,8 @@
-# Changelog
+# Versions
+
+## 1.5.0
+
+- `scriptAsScriptElements`: Convert an encoded script into script elements
 
 ## 1.4.0
 
