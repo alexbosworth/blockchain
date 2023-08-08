@@ -105,6 +105,22 @@ Convert a number to compact size integer serialization
       encoded: <Serialized Compact Integer Buffer Object>
     }
 
+### previousBlockId
+
+Given a raw block, return the previous block id
+
+    {
+      block: <Hex Encoded Block String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      previous: <Previous Block Id Hex String>
+    }
+
 ### scriptAsScriptElements
 
 Map a serialized script into an array of script elements

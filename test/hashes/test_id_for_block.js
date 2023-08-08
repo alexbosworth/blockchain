@@ -1,6 +1,6 @@
 const {deepStrictEqual} = require('node:assert').strict;
-const {throws} = require('node:assert').strict;
 const test = require('node:test');
+const {throws} = require('node:assert').strict;
 
 const {idForBlock} = require('./../../');
 

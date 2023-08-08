@@ -1,5 +1,9 @@
 # Versions
 
+## 1.6.0
+
+- `previousBlockId`: Add method to get the previous block id from a block
+
 ## 1.5.0
 
 - `scriptAsScriptElements`: Convert an encoded script into script elements
