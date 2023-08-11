@@ -1,5 +1,10 @@
 # Versions
 
+## 1.7.0
+
+- `idForTransactionComponents`: Add method to get transaction id for components
+- `queryTransactions`: Add method to find transaction outputs matching a query
+
 ## 1.6.0
 
 - `previousBlockId`: Add method to get the previous block id from a block

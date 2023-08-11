@@ -19,7 +19,7 @@ const times = n => [...Array(n).keys()];
 
   {
     buffer: <Data Buffer Object>
-    is_terminating_after_outputs: <Ignore Data After Outputs Bool>
+    [is_terminating_after_outputs]: <Ignore Data After Outputs Bool>
     [start]: <Starting Offset Index Number>
   }
 

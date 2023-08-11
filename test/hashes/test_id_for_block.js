@@ -1,4 +1,4 @@
-const {deepStrictEqual} = require('node:assert').strict;
+const {deepEqual} = require('node:assert').strict;
 const test = require('node:test');
 const {throws} = require('node:assert').strict;
 
@@ -30,7 +30,7 @@ tests.forEach(({args, description, error, expected}) => {
     } else {
       const res = idForBlock(args);
 
-      deepStrictEqual(res, expected, 'Got expected result');
+      deepEqual(res, expected, 'Got expected result');
     }
 
     return end();

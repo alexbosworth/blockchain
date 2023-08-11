@@ -17,7 +17,7 @@
     "url": "https://github.com/alexbosworth/blockchain.git"
   },
   "scripts": {
-    "test": "npx nyc@latest node --experimental-test-coverage --test test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
+    "test": "npx nyc@15.1.0 node --experimental-test-coverage --test test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
   },
-  "version": "1.6.0"
+  "version": "1.7.0"
 }

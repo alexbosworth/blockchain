@@ -1,4 +1,4 @@
-const {deepStrictEqual} = require('node:assert').strict;
+const {deepEqual} = require('node:assert').strict;
 const {throws} = require('node:assert').strict;
 const test = require('node:test');
 
@@ -48,7 +48,7 @@ tests.forEach(({args, description, error, expected}) => {
     } else {
       const res = noLocktimeIdForTransaction(args);
 
-      deepStrictEqual(res, expected, 'Got expected result');
+      deepEqual(res, expected, 'Got expected result');
     }
 
     return end();
