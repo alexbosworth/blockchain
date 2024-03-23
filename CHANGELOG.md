@@ -1,9 +1,13 @@
 # Versions
 
-## 1.7.0
+## 2.0.0
 
 - `idForTransactionComponents`: Add method to get transaction id for components
 - `queryTransactions`: Add method to find transaction outputs matching a query
+
+### Breaking Changes
+
+- End support for Node.js v16, require v18+
 
 ## 1.6.0
 
