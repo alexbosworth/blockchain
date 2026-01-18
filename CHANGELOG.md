@@ -1,5 +1,13 @@
 # Versions
 
+## 3.0.0
+
+- `decodeBase58Address`: Add method to convert b58 address to hash and version
+
+### Breaking Changes
+
+- End support for Node.js v18, require v20+
+
 ## 2.0.0
 
 - `idForTransactionComponents`: Add method to get transaction id for components

@@ -56,6 +56,23 @@ Get the components of a hex-encoded transaction
       version: <Version Number>
     }
 
+### decodeBase58Address
+
+Derive output hash and version data from a base58 address string
+
+    {
+      address: <Base58 Encoded Address String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      hash: <Output Hash Buffer Object>
+      version: <Script Version Byte Number>
+    }
+
 ### idForBlock
 
 Get an id for a block: the double sha256 hash of the block header

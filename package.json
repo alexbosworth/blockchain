@@ -8,7 +8,7 @@
   },
   "description": "Blockchain data utility methods",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "license": "MIT",
   "name": "@alexbosworth/blockchain",
@@ -17,7 +17,7 @@
     "url": "https://github.com/alexbosworth/blockchain.git"
   },
   "scripts": {
-    "test": "npx nyc@15.1.0 node --experimental-test-coverage --test test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
+    "test": "npx nyc@17.1.0 node --experimental-test-coverage --test test/addresses/*.js test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
   },
-  "version": "2.0.0"
+  "version": "3.0.0"
 }
