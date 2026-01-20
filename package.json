@@ -19,5 +19,5 @@
   "scripts": {
     "test": "npx nyc@17.1.0 node --experimental-test-coverage --test test/addresses/*.js test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
   },
-  "version": "3.0.0"
+  "version": "3.1.0"
 }
