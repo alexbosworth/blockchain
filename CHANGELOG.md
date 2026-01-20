@@ -1,5 +1,14 @@
 # Versions
 
+## 3.1.0
+
+- `p2pkhOutputScript`: Add method to get an output script for a p2wpkh hash
+- `p2shOutputScript`: Add method to get an output script for a p2sh hash
+- `p2trOutputScript`: Add method to get an output script for a p2tr hash
+- `p2wpkhOutputScript`: Add method to get an output script for a p2wpkh hash
+- `p2wshOutputScript`: Add method to get an output script for a p2wsh hash
+- `unsignedTxFromPsbt`: Add method to get the unsigned tx out of a PSBT
+
 ## 3.0.0
 
 - `decodeBase58Address`: Add method to convert b58 address to hash and version

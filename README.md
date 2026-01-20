@@ -149,6 +149,86 @@ Convert a number to compact size integer serialization
       encoded: <Serialized Compact Integer Buffer Object>
     }
 
+### p2pkhOutputScript
+
+Get a Pay To Witness Public Key Hash Output Script
+
+    {
+      hash: <Public Key Hash Buffer Object>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      script: <Output Script Buffer Object>
+    }
+
+### p2shOutputScript
+
+Get a Pay To Script Hash Output Script
+
+    {
+      hash: <Script Hash Buffer Object>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      script: <Output Script Buffer Object>
+    }
+
+### p2trOutputScript
+
+Get a Pay To Taproot Output Script
+
+    {
+      hash: <Taproot Hash Buffer Object>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      script: <Output Script Buffer Object>
+    }
+
+### p2wpkhOutputScript
+
+Get a Pay To Witness Public Key Hash Output Script
+
+    {
+      hash: <Witness Public Key Hash Buffer Object>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      script: <Output Script Buffer Object>
+    }
+
+### p2wshOutputScript
+
+Get a Pay To Witness Script Hash Output Script
+
+    {
+      hash: <Witness Script Hash Buffer Object>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      script: <Output Script Buffer Object>
+    }
+
 ### previousBlockId
 
 Given a raw block, return the previous block id
@@ -217,4 +297,20 @@ Map array of script buffer elements to a fully formed script
     @returns
     {
       script: <Script Hex String>
+    }
+
+### unsignedTxFromPsbt
+
+Get the unsigned transaction out of a PSBT
+
+    {
+      psbt: <PSBT Hex String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      transaction: <Unsigned Transaction Buffer Object>
     }

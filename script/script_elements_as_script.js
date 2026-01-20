@@ -1,12 +1,6 @@
-const {numberAsCompactInt} = require('./../numbers');
+const scriptElementsAsOutput = require('./script_elements_as_output');
 
 const bufferAsHex = buffer => buffer.toString('hex');
-const {concat} = Buffer;
-const encode = number => numberAsCompactInt({number}).encoded;
-const flatten = arr => arr.reduce((sum, n) => Buffer.concat([sum, n]));
-const {from} = Buffer;
-const {isArray} = Array;
-const {isBuffer} = Buffer;
 
 /** Map array of script buffer elements to a fully formed script
 
@@ -23,20 +17,7 @@ const {isBuffer} = Buffer;
   }
 */
 module.exports = ({elements}) => {
-  if (!isArray(elements)) {
-    throw new Error('ExpectedArrayOfScriptElementsToEncodeScript');
-  }
+  const {output} = scriptElementsAsOutput({elements});
 
-   // Convert numbers to buffers and hex data to pushdata
-  const fullScript = elements.map(element => {
-    // Exit early when element is a data push
-    if (isBuffer(element)) {
-      return concat([encode(element.length), element]);
-    }
-
-    // Non data elements are direct bytes
-    return from([element]);
-  });
-
-  return {script: bufferAsHex(flatten(fullScript))};
+  return {script: bufferAsHex(output)};
 };
