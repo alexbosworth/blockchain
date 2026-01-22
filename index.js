@@ -1,7 +1,9 @@
 const {compactIntAsNumber} = require('./numbers');
 const {componentsOfTransaction} = require('./transactions');
 const {decodeBase58Address} = require('./addresses');
+const {decodeBech32Address} = require('./addresses');
 const {idForBlock} = require('./hashes');
+const {idForTransaction} = require('./transactions');
 const {idForTransactionComponents} = require('./hashes');
 const {noLocktimeIdForTransaction} = require('./transactions');
 const {numberAsCompactInt} = require('./numbers');
@@ -20,7 +22,9 @@ module.exports = {
   compactIntAsNumber,
   componentsOfTransaction,
   decodeBase58Address,
+  decodeBech32Address,
   idForBlock,
+  idForTransaction,
   idForTransactionComponents,
   noLocktimeIdForTransaction,
   numberAsCompactInt,

@@ -12,6 +12,8 @@ const sha256 = preimage => createHash('sha256').update(preimage).digest();
 
 /** Determine a transaction id from transaction components
 
+  Note: remember the input hash is the reversed byte order of a normal tx id
+
   {
     inputs: [{
       hash: <Spending Internal Byte Order Transaction Id Buffer Object>

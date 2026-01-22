@@ -11,8 +11,6 @@ const defaultLocktime = 0;
 const defaultStartIndex = 0;
 const defaultWitnessCount = 0;
 const {isBuffer} = Buffer;
-const segWitV0Marker = 0;
-const segWitV0Flag = 1;
 const times = n => [...Array(n).keys()];
 
 /** Parse a raw transaction out of a buffer at a specific offset start
@@ -51,19 +49,19 @@ module.exports = args => {
   let offset = start;
 
   // Transaction version is a signed 4 byte integer
-  const version = args.buffer.readInt32LE(offset, offset + byteCountInt32);
+  const version = args.buffer.readInt32LE(offset);
 
   offset += byteCountInt32;
 
   // For SegWit transactions, the next 2 bytes would be a marker and flag
   const flagSplit = offset + byteCountInt8;
 
-  const marker = args.buffer.readUInt8(offset, flagSplit);
+  const marker = args.buffer.readUInt8(offset);
 
-  const flag = args.buffer.readUInt8(flagSplit, offset + byteCountMarkerFlag);
+  const flag = args.buffer.readUInt8(flagSplit);
 
   // The presence of the marker and flag indicates SegWit tx encoding
-  const isSegWit = !marker && flag === segWitV0Flag;
+  const isSegWit = !marker && !!flag;
 
   // When tx isn't SegWit though, the bytes are not marker and flag
   offset += isSegWit ? byteCountMarkerFlag : byteCountNoMarkerFlag;
@@ -83,7 +81,7 @@ module.exports = args => {
     offset += byteCountHash;
 
     // The vout is the 4 byte output index of the tx being spent in this input
-    const vout = args.buffer.readUInt32LE(offset, offset + byteCountInt32);
+    const vout = args.buffer.readUInt32LE(offset);
 
     offset += byteCountInt32;
 
@@ -98,7 +96,7 @@ module.exports = args => {
     offset += scriptLength.number;
 
     // Sequence is a 4 byte unsigned number for an input, used for CSV mainly
-    const sequence = args.buffer.readUInt32LE(offset, offset + byteCountInt32);
+    const sequence = args.buffer.readUInt32LE(offset);
 
     offset += byteCountInt32;
 
@@ -112,7 +110,7 @@ module.exports = args => {
   // Read in the outputs of the transaction
   const outputs = times(outputsCount.number).map(i => {
     // The value being spent
-    const value = args.buffer.readBigUInt64LE(offset, offset + byteCountInt64);
+    const value = args.buffer.readBigUInt64LE(offset);
 
     offset += byteCountInt64;
 
@@ -165,7 +163,7 @@ module.exports = args => {
   });
 
   // The final element is the 4 byte transaction nLockTime
-  const locktime = args.buffer.readUInt32LE(offset, offset + byteCountInt32);
+  const locktime = args.buffer.readUInt32LE(offset);
 
   offset += byteCountInt32;
 

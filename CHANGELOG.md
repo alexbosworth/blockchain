@@ -1,5 +1,10 @@
 # Versions
 
+## 3.2.0
+
+- `decode_bech32_address.js`: Add method to decode a bech32/bech32m address
+- `id_for_transaction.js`: Add method to derive the standard tx id for a raw tx
+
 ## 3.1.0
 
 - `p2pkhOutputScript`: Add method to get an output script for a p2wpkh hash

@@ -73,6 +73,24 @@ Derive output hash and version data from a base58 address string
       version: <Script Version Byte Number>
     }
 
+### decodeBech32Address
+
+Decode a bech32 address string to derive the address details
+
+    {
+      address: <Bech32 Encoded Address String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      data: <Output Data Buffer Object>
+      prefix: <Human Readable Prefix String>
+      version: <Witness Version Number>
+    }
+
 ### idForBlock
 
 Get an id for a block: the double sha256 hash of the block header
@@ -89,9 +107,27 @@ Get an id for a block: the double sha256 hash of the block header
       id: <Block Id Hex Encoded String>
     }
 
+### idForTransaction
+
+Derive the standard transaction id for a raw serialized tx
+
+    {
+      transaction: <Hex Encoded Transaction String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      id: <Transaction Id Hex Encoded String>
+    }
+
 ### idForTransactionComponents
 
 Determine a transaction id from transaction components
+
+Note: remember the input hash is the reversed byte order of a normal tx id
 
     {
       inputs: [{
