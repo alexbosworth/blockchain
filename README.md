@@ -4,6 +4,27 @@ Utility methods for working with Blockchain data
 
 ## Methods
 
+- [compactIntAsNumber](#compactintasnumber)
+- [componentsOfTransaction](#componentsoftransaction)
+- [decodeBase58Address](#decodebase58address)
+- [decodeBech32Address](#decodebech32address)
+- [idForBlock](#idforblock)
+- [idForTransaction](#idfortransaction)
+- [idForTransactionComponents](#idfortransactioncomponents)
+- [noLocktimeIdForTransaction](#nolocktimeidfortransaction)
+- [numberAsCompactInt](#numberascompactint)
+- [p2pkhOutputScript](#p2pkhoutputscript)
+- [p2shOutputScript](#p2shoutputscript)
+- [p2trOutputScript](#p2troutputscript)
+- [p2wpkhOutputScript](#p2wpkhoutputscript)
+- [p2wshOutputScript](#p2wshoutputscript)
+- [previousBlockId](#previousblockid)
+- [queryTransactions](#querytransactions)
+- [scriptAsScriptElements](#scriptasscriptelements)
+- [scriptElementsAsScript](#scriptelementsasscript)
+- [sizeOfTransaction](#sizeoftransaction)
+- [unsignedTxFromPsbt](#unsignedtxfrompsbt)
+
 ### compactIntAsNumber
 
 Convert a compact integer to a regular number
@@ -333,6 +354,23 @@ Map array of script buffer elements to a fully formed script
     @returns
     {
       script: <Script Hex String>
+    }
+
+### sizeOfTransaction
+
+Get the weight and virtual size of a hex-encoded transaction
+
+    {
+      transaction: <Hex Encoded Transaction String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      vsize: <Transaction Virtual Size Number>
+      weight: <Transaction Weight Units Number>
     }
 
 ### unsignedTxFromPsbt

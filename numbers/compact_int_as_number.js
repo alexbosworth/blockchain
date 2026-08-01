@@ -40,14 +40,13 @@ module.exports = ({encoded, start}) => {
 
   case 5:
     return {bytes, number: encoded.readUInt32LE(offset + lengthMarkerOffset)};
-
-  default:
-    const number = encoded.readBigUInt64LE(offset + lengthMarkerOffset);
-
-    if (!isSafeNumber(number)) {
-      throw new Error('ExpectedSafeSizeEncodedCompactInteger');
-    }
-
-    return {bytes, number: Number(number)};
   }
+
+  const number = encoded.readBigUInt64LE(offset + lengthMarkerOffset);
+
+  if (!isSafeNumber(number)) {
+    throw new Error('ExpectedSafeSizeEncodedCompactInteger');
+  }
+
+  return {bytes, number: Number(number)};
 };

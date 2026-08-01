@@ -1,5 +1,13 @@
 # Versions
 
+## 4.0.0
+
+- `sizeOfTransaction`: Add method to get transaction weight and virtual size
+
+### Breaking Changes
+
+- End support for Node.js v20, require v22+
+
 ## 3.2.0
 
 - `decode_bech32_address.js`: Add method to decode a bech32/bech32m address

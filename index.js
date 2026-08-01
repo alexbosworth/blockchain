@@ -16,6 +16,7 @@ const {previousBlockId} = require('./hashes');
 const {queryTransactions} = require('./transactions');
 const {scriptAsScriptElements} = require('./script');
 const {scriptElementsAsScript} = require('./script');
+const {sizeOfTransaction} = require('./transactions');
 const {unsignedTxFromPsbt} = require('./transactions');
 
 module.exports = {
@@ -37,5 +38,6 @@ module.exports = {
   queryTransactions,
   scriptAsScriptElements,
   scriptElementsAsScript,
+  sizeOfTransaction,
   unsignedTxFromPsbt,
 };

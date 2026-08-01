@@ -55,7 +55,6 @@ module.exports = ({offset, script}) => {
     };
 
   case OP_PUSHDATA4:
-  default:
     // Exit early when there isn't enough data for UInt32
     if (data.length < countUInt32Bytes) {
       return {};
