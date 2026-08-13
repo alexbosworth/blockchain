@@ -1,6 +1,6 @@
 # Versions
 
-## 4.1.0
+## 4.1.1
 
 - `p2msScript`: Add method to get pay to multi-sig script for keys + required
 
