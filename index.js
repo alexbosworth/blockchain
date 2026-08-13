@@ -7,6 +7,7 @@ const {idForTransaction} = require('./transactions');
 const {idForTransactionComponents} = require('./hashes');
 const {noLocktimeIdForTransaction} = require('./transactions');
 const {numberAsCompactInt} = require('./numbers');
+const {p2msScript} = require('./script');
 const {p2pkhOutputScript} = require('./script');
 const {p2shOutputScript} = require('./script');
 const {p2trOutputScript} = require('./script');
@@ -29,6 +30,7 @@ module.exports = {
   idForTransactionComponents,
   noLocktimeIdForTransaction,
   numberAsCompactInt,
+  p2msScript,
   p2pkhOutputScript,
   p2shOutputScript,
   p2trOutputScript,

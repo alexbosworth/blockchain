@@ -1,5 +1,9 @@
 # Versions
 
+## 4.1.0
+
+- `p2msScript`: Add method to get pay to multi-sig script for keys + required
+
 ## 4.0.0
 
 - `sizeOfTransaction`: Add method to get transaction weight and virtual size

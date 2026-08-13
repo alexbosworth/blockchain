@@ -13,6 +13,7 @@ Utility methods for working with Blockchain data
 - [idForTransactionComponents](#idfortransactioncomponents)
 - [noLocktimeIdForTransaction](#nolocktimeidfortransaction)
 - [numberAsCompactInt](#numberascompactint)
+- [p2msScript](#p2msscript)
 - [p2pkhOutputScript](#p2pkhoutputscript)
 - [p2shOutputScript](#p2shoutputscript)
 - [p2trOutputScript](#p2troutputscript)
@@ -205,6 +206,38 @@ Convert a number to compact size integer serialization
     {
       encoded: <Serialized Compact Integer Buffer Object>
     }
+
+### p2msScript
+
+Get a Pay To Multisig Script and the script hash to pay to the script
+
+Use `hash` with `p2wshOutputScript` for a P2WSH output script
+
+    {
+      keys: [<Public Key Buffer Object>]
+      required: <Signatures Required Count Number>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      hash: <Witness Script SHA256 Hash Buffer Object>
+      script: <Multisig Script Buffer Object>
+    }
+
+Example:
+
+```node
+const {p2msScript, p2wshOutputScript} = require('@alexbosworth/blockchain');
+
+// Derive the 2-of-3 multisig script and its witness script hash
+const {hash} = p2msScript({keys: publicKeys, required: 2});
+
+// Get the P2WSH output script paying to the multisig script
+const {script} = p2wshOutputScript({hash});
+```
 
 ### p2pkhOutputScript
 
