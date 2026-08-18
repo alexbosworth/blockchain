@@ -1,5 +1,10 @@
 # Versions
 
+## 4.2.0
+
+- `encodeBech32Address`: Add method to encode a bech32/bech32m address string
+- `hashForP2wpkh`: Add method to get the p2wpkh hash160 for a public key
+
 ## 4.1.1
 
 - `p2msScript`: Add method to get pay to multi-sig script for keys + required

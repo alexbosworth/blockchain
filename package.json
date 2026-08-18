@@ -17,7 +17,7 @@
     "url": "https://github.com/alexbosworth/blockchain.git"
   },
   "scripts": {
-    "test": "node --experimental-test-coverage --test test/addresses/*.js test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
+    "test": "node --experimental-test-coverage --test test/5bit/*.js test/addresses/*.js test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
   },
-  "version": "4.1.1"
+  "version": "4.2.0"
 }

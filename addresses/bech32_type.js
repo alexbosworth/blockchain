@@ -4,6 +4,8 @@ const codeForBech32 = 1;
 const codeForBech32m = 0x2bc830a3;
 const {from} = Array;
 const separator = 0;
+const wordBits = 5;
+const wordMask = 31;
 
 /** Determine the type of bech32 data being represented and verify checksum
 
@@ -26,17 +28,17 @@ module.exports = ({prefix, words}) => {
   // Collect the high bits
   const highBits = from(
     {length: prefix.length},
-    (_, i) => prefix.charCodeAt(i) >> 5
+    (_, i) => prefix.charCodeAt(i) >> wordBits
   );
 
   // Collect the low bits
   const lowBits = from(
     {length: prefix.length},
-    (_, i) => prefix.charCodeAt(i) & 31
+    (_, i) => prefix.charCodeAt(i) & wordMask
   );
 
   [...highBits, separator, ...lowBits, ...words].forEach(v => {
-    return accumulator = modifyBech32Accumulator(accumulator) ^ (v & 31);
+    return accumulator = modifyBech32Accumulator(accumulator) ^ (v & wordMask);
   });
 
   switch (accumulator) {

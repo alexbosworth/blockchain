@@ -8,6 +8,8 @@ Utility methods for working with Blockchain data
 - [componentsOfTransaction](#componentsoftransaction)
 - [decodeBase58Address](#decodebase58address)
 - [decodeBech32Address](#decodebech32address)
+- [encodeBech32Address](#encodebech32address)
+- [hashForP2wpkh](#hashforp2wpkh)
 - [idForBlock](#idforblock)
 - [idForTransaction](#idfortransaction)
 - [idForTransactionComponents](#idfortransactioncomponents)
@@ -108,9 +110,61 @@ Decode a bech32 address string to derive the address details
 
     @returns
     {
-      data: <Output Data Buffer Object>
       prefix: <Human Readable Prefix String>
+      program: <Output Data Buffer Object>
       version: <Witness Version Number>
+    }
+
+### encodeBech32Address
+
+Encode address details as a bech32 address string
+
+    {
+      prefix: <Human Readable Prefix String>
+      program: <Output Data Buffer Object>
+      version: <Witness Version Number>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      address: <Bech32 Encoded Address String>
+    }
+
+Example:
+
+```node
+const {encodeBech32Address, hashForP2wpkh} = require('@alexbosworth/blockchain');
+
+// The P2WPKH witness program is the hash160 of the compressed public key
+const {hash} = hashForP2wpkh({key: publicKey});
+
+// Encode the P2WPKH address paying to the public key hash
+const {address} = encodeBech32Address({
+  prefix: 'bc',
+  program: hash,
+  version: 0,
+});
+```
+
+### hashForP2wpkh
+
+Get the hash160 of a public key to pay to via P2WPKH
+
+Use `hash` with `p2wpkhOutputScript` for a P2WPKH output script
+
+    {
+      key: <Public Key Buffer Object>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      hash: <Public Key Hash160 Buffer Object>
     }
 
 ### idForBlock

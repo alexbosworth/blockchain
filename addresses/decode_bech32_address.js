@@ -1,9 +1,6 @@
 const decodeBech32 = require('./decode_bech32');
+const {wordsAsBytes} = require('./../5bit');
 
-const bitsPerBech32Word = 5;
-const bitsPerByte = 8;
-const byteMask = 0xff;
-const bytesArrayAsBuffer = arr => Buffer.from(arr);
 const knownV0ProgramLengths = [20, 32];
 const maxProgLength = 40;
 const maximumSegwitVersion = 16;
@@ -49,38 +46,16 @@ module.exports = ({address}) => {
     throw new Error('ExpectedUseOfLaterVersionBech32PostInitialSegwit');
   }
 
-  let bits = 0;
-  let carry = 0;
-  const program = [];
-
   // Convert the 5 bit bech32 words into 8 bit (ie bytes) data
-  data.forEach(value => {
-    carry = (carry << bitsPerBech32Word) | value;
+  const {bytes} = wordsAsBytes({words: data});
 
-    bits += bitsPerBech32Word;
-
-    while (bits >= bitsPerByte) {
-      bits -= bitsPerByte;
-
-      program.push((carry >> bits) & byteMask);
-    }
-  });
-
-  if (bits >= bitsPerBech32Word) {
-    throw new Error('ExpectedNoPaddingOnBech32Address');
-  };
-
-  if (((carry << (bitsPerByte - bits)) & byteMask) !== 0) {
-    throw new Error('UnexpectedNonZeroPadding');
-  }
-
-  if (program.length < minimumProgLength || program.length > maxProgLength) {
+  if (bytes.length < minimumProgLength || bytes.length > maxProgLength) {
     throw new Error('UnexpectedSizeOfBech32AddressProgram');
   }
 
-  if (version === 0 && !knownV0ProgramLengths.includes(program.length)) {
+  if (version === 0 && !knownV0ProgramLengths.includes(bytes.length)) {
     throw new Error('UnexpectedBech32AddressProgramSizeForV0Address')
   }
 
-  return {version, prefix, program: bytesArrayAsBuffer(program)};
+  return {version, prefix, program: bytes};
 };
