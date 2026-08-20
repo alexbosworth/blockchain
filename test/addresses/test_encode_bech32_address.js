@@ -119,6 +119,17 @@ const tests = [
   },
   {
     args: {
+      prefix: 'tb',
+      program: hexAsBuffer('000000c4a5cad46221b2a187905e5266362b99d5e91c6ce24d165dab93e86433'),
+      version: 1,
+    },
+    description: 'An address is encoded for a zero starting tb1 v1 output',
+    expected: {
+      address: 'tb1pqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesf3hn0c',
+    },
+  },
+  {
+    args: {
       prefix: 'bc',
       program: hexAsBuffer('79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'),
       version: 1,
@@ -126,6 +137,17 @@ const tests = [
     description: 'An address is encoded for a bc1 v1 output',
     expected: {
       address: 'bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqzk5jj0',
+    },
+  },
+  {
+    args: {
+      prefix: 'bcrt',
+      program: hexAsBuffer('79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'),
+      version: 1,
+    },
+    description: 'An address is encoded for a bcrt1 regtest v1 output',
+    expected: {
+      address: 'bcrt1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqc8gma6',
     },
   },
 ];

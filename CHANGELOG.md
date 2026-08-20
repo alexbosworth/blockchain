@@ -1,5 +1,9 @@
 # Versions
 
+## 4.5.0
+
+- `encodeBase58Address`: Add method to convert hash and version to b58 address
+
 ## 4.4.0
 
 - `transactionFromComponents`: Add method to form a raw tx from tx components

@@ -8,6 +8,7 @@ Utility methods for working with Blockchain data
 - [componentsOfTransaction](#componentsoftransaction)
 - [decodeBase58Address](#decodebase58address)
 - [decodeBech32Address](#decodebech32address)
+- [encodeBase58Address](#encodebase58address)
 - [encodeBech32Address](#encodebech32address)
 - [hashForP2pkh](#hashforp2pkh)
 - [hashForP2wpkh](#hashforp2wpkh)
@@ -116,6 +117,35 @@ Decode a bech32 address string to derive the address details
       program: <Output Data Buffer Object>
       version: <Witness Version Number>
     }
+
+### encodeBase58Address
+
+Encode output hash and version data as a base58 address string
+
+    {
+      hash: <Output Hash Buffer Object>
+      version: <Script Version Byte Number>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      address: <Base58 Encoded Address String>
+    }
+
+Example:
+
+```node
+const {encodeBase58Address, hashForP2pkh} = require('@alexbosworth/blockchain');
+
+// The P2PKH output hash is the hash160 of the compressed public key
+const {hash} = hashForP2pkh({key: publicKey});
+
+// Encode the P2PKH address paying to the public key hash
+const {address} = encodeBase58Address({hash, version: 0});
+```
 
 ### encodeBech32Address
 

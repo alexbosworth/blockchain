@@ -38,7 +38,7 @@ module.exports = ({keys, required}) => {
     throw new Error('ExpectedFewerPublicKeysToDeriveP2msScript');
   }
 
-  if (!!keys.find(key => !isBuffer(key) || key.length !== publicKeyLength)) {
+  if (keys.some(key => !isBuffer(key) || key.length !== publicKeyLength)) {
     throw new Error('ExpectedCompressedPublicKeysToDeriveP2msScript');
   }
 

@@ -48,11 +48,11 @@ module.exports = ({prefix, type, words}) => {
     throw new Error('ExpectedArrayOfDataWordsToEncodeBech32String');
   }
 
-  if (!!words.find(n => !isInteger(n))) {
+  if (words.some(n => !isInteger(n))) {
     throw new Error('ExpectedIntegerDataWordsToEncodeBech32String');
   }
 
-  if (!!words.find(n => n < minimumWordValue || n > maximumWordValue)) {
+  if (words.some(n => n < minimumWordValue || n > maximumWordValue)) {
     throw new Error('Expected5BitDataWordValuesToEncodeBech32String');
   }
 

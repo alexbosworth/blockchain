@@ -44,7 +44,7 @@ module.exports = ({inputs, locktime, outputs, version}) => {
     throw new Error('ExpectedArrayOfInputsToFormTransactionFromComponents');
   }
 
-  if (!!inputs.find(input => !input || !isTxId(input.id))) {
+  if (inputs.some(input => !input || !isTxId(input.id))) {
     throw new Error('ExpectedSpendingTransactionIdsToFormTransaction');
   }
 
@@ -60,7 +60,7 @@ module.exports = ({inputs, locktime, outputs, version}) => {
     throw new Error('ExpectedArrayOfOutputsToFormTransactionFromComponents');
   }
 
-  if (!!outputs.find(output => !output || !isHex(output.script || ''))) {
+  if (outputs.some(output => !output || !isHex(output.script || ''))) {
     throw new Error('ExpectedHexEncodedOutputScriptsToFormTransaction');
   }
 

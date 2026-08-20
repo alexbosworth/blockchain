@@ -2,6 +2,7 @@ const {compactIntAsNumber} = require('./numbers');
 const {componentsOfTransaction} = require('./transactions');
 const {decodeBase58Address} = require('./addresses');
 const {decodeBech32Address} = require('./addresses');
+const {encodeBase58Address} = require('./addresses');
 const {encodeBech32Address} = require('./addresses');
 const {hashForP2pkh} = require('./hashes');
 const {hashForP2wpkh} = require('./hashes');
@@ -29,6 +30,7 @@ module.exports = {
   componentsOfTransaction,
   decodeBase58Address,
   decodeBech32Address,
+  encodeBase58Address,
   encodeBech32Address,
   hashForP2pkh,
   hashForP2wpkh,

@@ -46,6 +46,11 @@ const tests = [
     error: 'ExpectedCompressedPublicKeysToDeriveP2msScript',
   },
   {
+    args: {keys: [null], required: 1},
+    description: 'Defined public keys are required',
+    error: 'ExpectedCompressedPublicKeysToDeriveP2msScript',
+  },
+  {
     args: {keys: bip143MultisigKeys.map(bufferFromHex)},
     description: 'A required keys count is required',
     error: 'ExpectedRequiredKeysCountToDeriveP2msScript',

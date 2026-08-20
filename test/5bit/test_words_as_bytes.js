@@ -18,6 +18,11 @@ const tests = [
     error: 'ExpectedIntegerDataWordsToConvertToDataBytes',
   },
   {
+    args: {words: [NaN]},
+    description: 'Numeric data words are expected',
+    error: 'ExpectedIntegerDataWordsToConvertToDataBytes',
+  },
+  {
     args: {words: [32]},
     description: 'Data words within the word value range are expected',
     error: 'Expected5BitDataWordValuesToConvertToDataBytes',

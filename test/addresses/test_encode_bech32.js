@@ -26,6 +26,11 @@ const tests = [
     error: 'ExpectedIntegerDataWordsToEncodeBech32String',
   },
   {
+    args: {prefix: 'bc', type: 'bech32', words: [NaN]},
+    description: 'Numeric data words are expected',
+    error: 'ExpectedIntegerDataWordsToEncodeBech32String',
+  },
+  {
     args: {prefix: 'bc', type: 'bech32', words: [32]},
     description: 'Data words within the word value range are expected',
     error: 'Expected5BitDataWordValuesToEncodeBech32String',

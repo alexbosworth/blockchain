@@ -27,11 +27,11 @@ module.exports = ({words}) => {
     throw new Error('ExpectedArrayOfDataWordsToConvertToDataBytes');
   }
 
-  if (!!words.find(n => !isInteger(n))) {
+  if (words.some(n => !isInteger(n))) {
     throw new Error('ExpectedIntegerDataWordsToConvertToDataBytes');
   }
 
-  if (!!words.find(n => n < minimumWordValue || n > maximumWordValue)) {
+  if (words.some(n => n < minimumWordValue || n > maximumWordValue)) {
     throw new Error('Expected5BitDataWordValuesToConvertToDataBytes');
   }
 
