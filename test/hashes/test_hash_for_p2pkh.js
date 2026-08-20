@@ -2,7 +2,7 @@ const {deepStrictEqual} = require('node:assert').strict;
 const {throws} = require('node:assert').strict;
 const test = require('node:test');
 
-const {hashForP2wpkh} = require('./../../');
+const {hashForP2pkh} = require('./../../');
 
 const bufferFromHex = hex => Buffer.from(hex, 'hex');
 
@@ -42,9 +42,9 @@ const tests = [
 tests.forEach(({args, description, error, expected}) => {
   return test(description, (t, end) => {
     if (!!error) {
-      throws(() => hashForP2wpkh(args), new Error(error), 'Got err');
+      throws(() => hashForP2pkh(args), new Error(error), 'Got err');
     } else {
-      const res = hashForP2wpkh(args);
+      const res = hashForP2pkh(args);
 
       deepStrictEqual(res, expected, 'Got expected result');
     }

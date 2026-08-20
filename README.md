@@ -9,6 +9,7 @@ Utility methods for working with Blockchain data
 - [decodeBase58Address](#decodebase58address)
 - [decodeBech32Address](#decodebech32address)
 - [encodeBech32Address](#encodebech32address)
+- [hashForP2pkh](#hashforp2pkh)
 - [hashForP2wpkh](#hashforp2wpkh)
 - [idForBlock](#idforblock)
 - [idForTransaction](#idfortransaction)
@@ -148,6 +149,24 @@ const {address} = encodeBech32Address({
   version: 0,
 });
 ```
+
+### hashForP2pkh
+
+Get the hash160 of a public key to pay to via P2PKH
+
+Use `hash` with `p2pkhOutputScript` for a P2PKH output script
+
+    {
+      key: <Public Key Buffer Object>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      hash: <Public Key Hash160 Buffer Object>
+    }
 
 ### hashForP2wpkh
 
@@ -295,7 +314,7 @@ const {script} = p2wshOutputScript({hash});
 
 ### p2pkhOutputScript
 
-Get a Pay To Witness Public Key Hash Output Script
+Get a Pay To Public Key Hash Output Script
 
     {
       hash: <Public Key Hash Buffer Object>

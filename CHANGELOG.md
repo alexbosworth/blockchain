@@ -1,5 +1,9 @@
 # Versions
 
+## 4.3.0
+
+- `hashForP2pkh`: Add method to get the p2pkh hash160 for a public key
+
 ## 4.2.0
 
 - `encodeBech32Address`: Add method to encode a bech32/bech32m address string

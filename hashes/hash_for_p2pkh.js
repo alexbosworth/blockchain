@@ -1,8 +1,8 @@
 const hash160ForPublicKey = require('./hash160_for_public_key');
 
-/** Get the hash160 of a public key to pay to via P2WPKH
+/** Get the hash160 of a public key to pay to via P2PKH
 
-  Use `hash` with `p2wpkhOutputScript` for a P2WPKH output script
+  Use `hash` with `p2pkhOutputScript` for a P2PKH output script
 
   {
     key: <Public Key Buffer Object>
