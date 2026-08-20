@@ -4,6 +4,7 @@ const noLocktimeIdForTransaction = require('./no_locktime_id_for_transaction');
 const parseTransaction = require('./parse_transaction');
 const queryTransactions = require('./query_transactions');
 const sizeOfTransaction = require('./size_of_transaction');
+const transactionFromComponents = require('./transaction_from_components');
 const unsignedTxFromPsbt = require('./unsigned_tx_from_psbt');
 
 module.exports = {
@@ -13,5 +14,6 @@ module.exports = {
   parseTransaction,
   queryTransactions,
   sizeOfTransaction,
+  transactionFromComponents,
   unsignedTxFromPsbt,
 };

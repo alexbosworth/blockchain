@@ -1,5 +1,9 @@
 # Versions
 
+## 4.4.0
+
+- `transactionFromComponents`: Add method to form a raw tx from tx components
+
 ## 4.3.0
 
 - `hashForP2pkh`: Add method to get the p2pkh hash160 for a public key

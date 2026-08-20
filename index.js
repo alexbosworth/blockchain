@@ -21,6 +21,7 @@ const {queryTransactions} = require('./transactions');
 const {scriptAsScriptElements} = require('./script');
 const {scriptElementsAsScript} = require('./script');
 const {sizeOfTransaction} = require('./transactions');
+const {transactionFromComponents} = require('./transactions');
 const {unsignedTxFromPsbt} = require('./transactions');
 
 module.exports = {
@@ -47,5 +48,6 @@ module.exports = {
   scriptAsScriptElements,
   scriptElementsAsScript,
   sizeOfTransaction,
+  transactionFromComponents,
   unsignedTxFromPsbt,
 };

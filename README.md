@@ -27,6 +27,7 @@ Utility methods for working with Blockchain data
 - [scriptAsScriptElements](#scriptasscriptelements)
 - [scriptElementsAsScript](#scriptelementsasscript)
 - [sizeOfTransaction](#sizeoftransaction)
+- [transactionFromComponents](#transactionfromcomponents)
 - [unsignedTxFromPsbt](#unsignedtxfrompsbt)
 
 ### compactIntAsNumber
@@ -477,6 +478,34 @@ Get the weight and virtual size of a hex-encoded transaction
     {
       vsize: <Transaction Virtual Size Number>
       weight: <Transaction Weight Units Number>
+    }
+
+### transactionFromComponents
+
+Form a hex-encoded transaction from its component elements
+
+    {
+      inputs: [{
+        id: <Spending Transaction Id Hex String>
+        script: <ScriptSig Script Hex String>
+        sequence: <Sequence Number>
+        vout: <Spending Transaction Output Index Number>
+        [witness]: [<Script Stack Element Hex String>]
+      }]
+      locktime: <Timelock nLockTime Number>
+      outputs: [{
+        script: <ScriptPub Script Hex String>
+        tokens: <Tokens Count Number>
+      }]
+      version: <Version Number>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      transaction: <Hex Encoded Transaction String>
     }
 
 ### unsignedTxFromPsbt
