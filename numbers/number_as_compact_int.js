@@ -7,6 +7,7 @@ const limitBytes4 = 4294967295;
 const markerBytes2 = 253;
 const markerBytes4 = 254;
 const markerBytes8 = 255;
+const minimumNumber = 0;
 const rightShift = 0;
 
 /** Convert a number to compact size integer serialization
@@ -26,6 +27,10 @@ const rightShift = 0;
 module.exports = ({number}) => {
   if (!isSafeNumber(number)) {
     throw new Error('ExpectedEncodeSafeNumberToEncodeAsCompactInteger');
+  }
+
+  if (number < minimumNumber) {
+    throw new Error('ExpectedNonNegativeNumberToEncodeAsCompactInteger');
   }
 
   const encoded = Buffer.alloc(byteLength(number));

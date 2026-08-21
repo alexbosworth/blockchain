@@ -25,11 +25,21 @@ module.exports = ({encoded, start}) => {
 
   const offset = start || defaultOffset;
 
+  // Exit early with error when there is no size byte to read
+  if (encoded.length <= offset) {
+    throw new Error('ExpectedCompactIntegerSizeByteToConvertToNumber');
+  }
+
   // The total byte count of the compact integer is given by the first byte
   const size = encoded.readUInt8(offset);
 
   // Convert the first byte into the byte length of the encoding
   const bytes = byteLength(size);
+
+  // Exit early with error when the encoded number is cut short
+  if (encoded.length < offset + bytes) {
+    throw new Error('ExpectedFullEncodedCompactIntegerToConvertToNumber');
+  }
 
   switch (bytes) {
   case 1:

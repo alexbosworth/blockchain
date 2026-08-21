@@ -16,6 +16,16 @@ const tests = [
     error: 'ExpectedSafeSizeEncodedCompactInteger',
   },
   {
+    args: {encoded: '00', start: 1},
+    description: 'A size byte within the encoded bytes is expected',
+    error: 'ExpectedCompactIntegerSizeByteToConvertToNumber',
+  },
+  {
+    args: {encoded: 'fdff'},
+    description: 'A complete encoded number is expected',
+    error: 'ExpectedFullEncodedCompactIntegerToConvertToNumber',
+  },
+  {
     args: {encoded: '00'},
     description: 'Smallest possible one byte number decoded',
     expected: {bytes: 1, number: 0},

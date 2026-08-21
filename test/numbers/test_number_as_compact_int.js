@@ -11,6 +11,11 @@ const tests = [
     error: 'ExpectedEncodeSafeNumberToEncodeAsCompactInteger',
   },
   {
+    args: {number: -1},
+    description: 'Negative numbers are not allowed',
+    error: 'ExpectedNonNegativeNumberToEncodeAsCompactInteger',
+  },
+  {
     args: {number: Number.MAX_SAFE_INTEGER + 1},
     description: 'Large numbers are not allowed',
     error: 'ExpectedEncodeSafeNumberToEncodeAsCompactInteger',

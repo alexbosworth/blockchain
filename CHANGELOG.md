@@ -1,6 +1,6 @@
 # Versions
 
-## 4.5.0
+## 4.5.1
 
 - `encodeBase58Address`: Add method to convert hash and version to b58 address
 
