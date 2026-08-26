@@ -8,7 +8,7 @@ const {concat} = Buffer;
 const encodeCount = number => numberAsCompactInt({number}).encoded;
 const hexAsBuffer = hex => Buffer.from(hex, 'hex');
 const {isArray} = Array;
-const isHex = n => !(n.length % 2) && /^[0-9A-F]*$/i.test(n);
+const isHex = n => typeof n === 'string' && !(n.length % 2) && /^[0-9A-F]*$/i.test(n);
 const isTxId = n => /^[0-9A-F]{64}$/i.test(n);
 const markerAndFlag = Buffer.from([0x00, 0x01]);
 const txIdAsTxHash = id => hexAsBuffer(id).reverse();
@@ -52,6 +52,11 @@ module.exports = ({inputs, locktime, outputs, version}) => {
     throw new Error('ExpectedHexEncodedInputScriptsToFormTransaction');
   }
 
+  // Confirm witness stack elements are hex encoded when present
+  if (inputs.some(n => isArray(n.witness) && !n.witness.every(isHex))) {
+    throw new Error('ExpectedHexEncodedWitnessElementsToFormTransaction');
+  }
+
   if (locktime === undefined) {
     throw new Error('ExpectedLocktimeToFormTransactionFromComponents');
   }
@@ -68,8 +73,8 @@ module.exports = ({inputs, locktime, outputs, version}) => {
     throw new Error('ExpectedVersionNumberToFormTransactionFromComponents');
   }
 
-  // The presence of any input witness indicates SegWit tx encoding
-  const isSegWit = !!inputs.find(input => isArray(input.witness));
+  // Only use SegWit encoding when an input has witness stack elements
+  const isSegWit = inputs.some(n => isArray(n.witness) && !!n.witness.length);
 
   const elements = [];
 

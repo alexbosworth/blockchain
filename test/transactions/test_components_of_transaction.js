@@ -14,6 +14,97 @@ const tests = [
   },
   {
     args: {
+      transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff0101000000000000000000000000deadbeef',
+    },
+    description: 'A tx with extra data on the end is rejected',
+    error: 'UnexpectedDataAfterTransactionToGetComponentsOf',
+  },
+  {
+    args: {
+      transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000fffffffffd0000ffffffff0101000000000000000000000000',
+    },
+    description: 'A tx with a non-minimal script length encoding is rejected',
+    error: 'ExpectedMinimallyEncodedCompactIntegerNumber',
+  },
+  {
+    args: {
+      transaction: '0100',
+    },
+    description: 'A tx cut short in the version is rejected',
+    error: 'ExpectedAdditionalTransactionDataToParse',
+  },
+  {
+    args: {
+      transaction: '0100000000',
+    },
+    description: 'A tx cut short after a zero marker byte is rejected',
+    error: 'ExpectedAdditionalTransactionDataToParse',
+  },
+  {
+    args: {
+      transaction: '01000000fdffff0000000000000000000000000000000000000000',
+    },
+    description: 'A tx claiming more inputs than the data holds is rejected',
+    error: 'UnexpectedInputCountForTransactionDataLength',
+  },
+  {
+    args: {
+      transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000fffffffffc0000000000000000000000000000000000000000000000',
+    },
+    description: 'A tx claiming a script larger than the data is rejected',
+    error: 'ExpectedAdditionalTransactionDataToParse',
+  },
+  {
+    args: {
+      transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff00fffffffffdffff0000000000000000',
+    },
+    description: 'A tx claiming more outputs than the data holds is rejected',
+    error: 'UnexpectedOutputCountForTransactionDataLength',
+  },
+  {
+    args: {
+      transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff010100000000000000fc',
+    },
+    description: 'A tx claiming an output script larger than data is rejected',
+    error: 'ExpectedAdditionalTransactionDataToParse',
+  },
+  {
+    args: {
+      transaction: '010000000001010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff01010000000000000000fc00000000',
+    },
+    description: 'A tx claiming more witness elements than data is rejected',
+    error: 'UnexpectedWitnessCountForTransactionDataLength',
+  },
+  {
+    args: {
+      transaction: '010000000001010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff0101000000000000000001fc00000000',
+    },
+    description: 'A tx claiming a witness element larger than data is rejected',
+    error: 'ExpectedAdditionalTransactionDataToParse',
+  },
+  {
+    args: {
+      transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff010100000000000000000000',
+    },
+    description: 'A tx cut short in the locktime is rejected',
+    error: 'ExpectedAdditionalTransactionDataToParse',
+  },
+  {
+    args: {
+      transaction: '010000000001010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff0101000000000000000000' + '00000000',
+    },
+    description: 'A witness serialized tx with no witness data is rejected',
+    error: 'UnexpectedSuperfluousWitnessDataInTransaction',
+  },
+  {
+    args: {
+      transaction: '010000000002010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff010100000000000000000101510000' + '0000',
+    },
+    description: 'A witness serialized tx with an unknown flag is rejected',
+    error: 'UnexpectedWitnessFlagByteValueInTransaction',
+  },
+  {
+    args: {
       transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000',
     },
     description: 'A coinbase transaction is parsed',

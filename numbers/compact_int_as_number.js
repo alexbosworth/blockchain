@@ -4,6 +4,9 @@ const {isBuffer} = Buffer;
 const isSafeNumber = n => n <= BigInt(Number.MAX_SAFE_INTEGER);
 const lengthMarkerOffset = 1;
 const limitBytes1 = 253;
+const minNumberBytes3 = 253;
+const minNumberBytes5 = 65536;
+const minNumberBytes9 = BigInt(4294967296);
 
 /** Convert a compact integer to a regular number
 
@@ -45,14 +48,35 @@ module.exports = ({encoded, start}) => {
   case 1:
     return {bytes, number: size};
 
-  case 3:
-    return {bytes, number: encoded.readUInt16LE(offset + lengthMarkerOffset)};
+  case 3: {
+    const number = encoded.readUInt16LE(offset + lengthMarkerOffset);
 
-  case 5:
-    return {bytes, number: encoded.readUInt32LE(offset + lengthMarkerOffset)};
+    // Exit early with error when the number encoding is not minimal
+    if (number < minNumberBytes3) {
+      throw new Error('ExpectedMinimallyEncodedCompactIntegerNumber');
+    }
+
+    return {bytes, number};
+  }
+
+  case 5: {
+    const number = encoded.readUInt32LE(offset + lengthMarkerOffset);
+
+    // Exit early with error when the number encoding is not minimal
+    if (number < minNumberBytes5) {
+      throw new Error('ExpectedMinimallyEncodedCompactIntegerNumber');
+    }
+
+    return {bytes, number};
+  }
   }
 
   const number = encoded.readBigUInt64LE(offset + lengthMarkerOffset);
+
+  // Exit early with error when the number encoding is not minimal
+  if (number < minNumberBytes9) {
+    throw new Error('ExpectedMinimallyEncodedCompactIntegerNumber');
+  }
 
   if (!isSafeNumber(number)) {
     throw new Error('ExpectedSafeSizeEncodedCompactInteger');

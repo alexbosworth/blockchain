@@ -1,12 +1,15 @@
 const {createHash} = require('crypto');
 
+const {compactIntAsNumber} = require('./../numbers');
+
 const {idForTransactionComponents} = require('./../hashes');
 const parseTransaction = require('./parse_transaction');
 
 const bufferAsHex = buffer => buffer.toString('hex');
 const hexAsBuffer = hex => Buffer.from(hex, 'hex');
 const {isArray} = Array;
-const transactionsStartIndex = 81;
+const minTxByteLength = 60;
+const transactionsStartIndex = 80;
 
 /** Find matching transactions within a block
 
@@ -38,11 +41,29 @@ module.exports = ({block, outputs}) => {
   }
 
   const buffer = hexAsBuffer(block);
-  let cursor = transactionsStartIndex;
+
+  // Exit early with error when the block header data is cut short
+  if (buffer.length <= transactionsStartIndex) {
+    throw new Error('ExpectedBlockHeaderAndTransactionsToQueryTransactions');
+  }
+
+  // A compact int count of transactions follows the block header
+  const txCount = compactIntAsNumber({
+    encoded: buffer,
+    start: transactionsStartIndex,
+  });
+
+  let cursor = transactionsStartIndex + txCount.bytes;
   const hits = [];
+  let remaining = txCount.number;
+
+  // Confirm the data could possibly contain the claimed count of txs
+  if (txCount.number * minTxByteLength > buffer.length - cursor) {
+    throw new Error('UnexpectedTransactionCountForBlockDataLength');
+  }
 
   // Iterate forward through the block, parsing txs and looking for hits
-  while (cursor < buffer.length) {
+  while (remaining--) {
     const tx = parseTransaction({buffer, start: cursor});
 
     // Look at the transaction outputs to see if there is a match
@@ -70,6 +91,11 @@ module.exports = ({block, outputs}) => {
     });
 
     cursor += tx.bytes.length;
+  }
+
+  // Exit early with error when there is extra data after the transactions
+  if (cursor !== buffer.length) {
+    throw new Error('UnexpectedDataAfterBlockTransactions');
   }
 
   return {outputs: hits};

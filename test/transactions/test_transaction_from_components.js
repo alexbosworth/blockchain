@@ -86,6 +86,40 @@ const tests = [
     args: {
       inputs: [{
         id: '0000000000000000000000000000000000000000000000000000000000000000',
+        script: '',
+        sequence: 4294967295,
+        vout: 0,
+        witness: ['zz'],
+      }],
+      locktime: 0,
+      outputs: [{script: '6a', tokens: 1}],
+      version: 1,
+    },
+    description: 'Hex encoded witness stack elements are expected',
+    error: 'ExpectedHexEncodedWitnessElementsToFormTransaction',
+  },
+  {
+    args: {
+      inputs: [{
+        id: '0000000000000000000000000000000000000000000000000000000000000000',
+        script: '',
+        sequence: 4294967295,
+        vout: 4294967295,
+        witness: [],
+      }],
+      locktime: 0,
+      outputs: [{script: '6a', tokens: 1}],
+      version: 1,
+    },
+    description: 'Empty witness stacks are encoded as a legacy transaction',
+    expected: {
+      transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff010100000000000000016a00000000',
+    },
+  },
+  {
+    args: {
+      inputs: [{
+        id: '0000000000000000000000000000000000000000000000000000000000000000',
         script: '04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73',
         sequence: 4294967295,
         vout: 4294967295,

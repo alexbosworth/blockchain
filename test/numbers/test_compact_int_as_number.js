@@ -26,6 +26,21 @@ const tests = [
     error: 'ExpectedFullEncodedCompactIntegerToConvertToNumber',
   },
   {
+    args: {encoded: 'fdfc00'},
+    description: 'A two byte encoding of a one byte number is rejected',
+    error: 'ExpectedMinimallyEncodedCompactIntegerNumber',
+  },
+  {
+    args: {encoded: 'feffff0000'},
+    description: 'A four byte encoding of a two byte number is rejected',
+    error: 'ExpectedMinimallyEncodedCompactIntegerNumber',
+  },
+  {
+    args: {encoded: 'ffffffffff00000000'},
+    description: 'An eight byte encoding of a four byte number is rejected',
+    error: 'ExpectedMinimallyEncodedCompactIntegerNumber',
+  },
+  {
     args: {encoded: '00'},
     description: 'Smallest possible one byte number decoded',
     expected: {bytes: 1, number: 0},

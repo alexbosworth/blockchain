@@ -7,11 +7,15 @@ const byteCountInt64 = 8;
 const byteCountMarkerFlag = 2;
 const byteCountNoMarkerFlag = 0;
 const decodeCompactInt = (b, o) => compactIntAsNumber({encoded: b, start: o});
+const defaultFlagValue = 0;
 const defaultLocktime = 0;
 const defaultStartIndex = 0;
 const defaultWitnessCount = 0;
 const {isBuffer} = Buffer;
+const minByteLengthInput = 41;
+const minByteLengthOutput = 9;
 const times = n => [...Array(n).keys()];
+const witnessFlagValue = 1;
 
 /** Parse a raw transaction out of a buffer at a specific offset start
 
@@ -48,6 +52,16 @@ module.exports = args => {
 
   let offset = start;
 
+  // Make sure there is enough data remaining to read a count of bytes
+  const guardRead = bytes => {
+    if (args.buffer.length - offset < bytes) {
+      throw new Error('ExpectedAdditionalTransactionDataToParse');
+    }
+  };
+
+  // Confirm the transaction version bytes are present
+  guardRead(byteCountInt32);
+
   // Transaction version is a signed 4 byte integer
   const version = args.buffer.readInt32LE(offset);
 
@@ -56,12 +70,25 @@ module.exports = args => {
   // For SegWit transactions, the next 2 bytes would be a marker and flag
   const flagSplit = offset + byteCountInt8;
 
+  // Confirm the marker byte is present
+  guardRead(byteCountInt8);
+
   const marker = args.buffer.readUInt8(offset);
 
-  const flag = args.buffer.readUInt8(flagSplit);
+  // A zero marker byte means a witness flag byte follows the marker
+  if (!marker) {
+    guardRead(byteCountMarkerFlag);
+  }
+
+  const flag = !marker ? args.buffer.readUInt8(flagSplit) : defaultFlagValue;
 
   // The presence of the marker and flag indicates SegWit tx encoding
-  const isSegWit = !marker && !!flag;
+  const isSegWit = !marker && flag === witnessFlagValue;
+
+  // A zero marker byte requires the BIP 144 witness flag value to follow
+  if (!marker && !isSegWit) {
+    throw new Error('UnexpectedWitnessFlagByteValueInTransaction');
+  }
 
   // When tx isn't SegWit though, the bytes are not marker and flag
   offset += isSegWit ? byteCountMarkerFlag : byteCountNoMarkerFlag;
@@ -70,11 +97,19 @@ module.exports = args => {
 
   offset += inputsCount.bytes;
 
+  // Confirm the data could possibly contain the claimed count of inputs
+  if (inputsCount.number * minByteLengthInput > args.buffer.length - offset) {
+    throw new Error('UnexpectedInputCountForTransactionDataLength');
+  }
+
   // For SegWit the witness stacks will be at the end of the transaction
   const witnessCount = isSegWit ? inputsCount.number : defaultWitnessCount;
 
   // Read in the inputs
   const inputs = times(inputsCount.number).map(i => {
+    // Confirm the outpoint hash and output index bytes are present
+    guardRead(byteCountHash + byteCountInt32);
+
     // The hash is the internal byte order hash of the tx being spent
     const hash = args.buffer.subarray(offset, offset + byteCountHash);
 
@@ -89,6 +124,9 @@ module.exports = args => {
     const scriptLength = decodeCompactInt(args.buffer, offset);
 
     offset += scriptLength.bytes;
+
+    // Confirm the script and sequence bytes are present
+    guardRead(scriptLength.number + byteCountInt32);
 
     // Scripts are variable byte length
     const script = args.buffer.subarray(offset, offset + scriptLength.number);
@@ -107,8 +145,16 @@ module.exports = args => {
 
   offset += outputsCount.bytes;
 
+  // Confirm the data could possibly contain the claimed count of outputs
+  if (outputsCount.number * minByteLengthOutput > args.buffer.length - offset) {
+    throw new Error('UnexpectedOutputCountForTransactionDataLength');
+  }
+
   // Read in the outputs of the transaction
   const outputs = times(outputsCount.number).map(i => {
+    // Confirm the output value bytes are present
+    guardRead(byteCountInt64);
+
     // The value being spent
     const value = args.buffer.readBigUInt64LE(offset);
 
@@ -118,6 +164,9 @@ module.exports = args => {
     const scriptLength = decodeCompactInt(args.buffer, offset);
 
     offset += scriptLength.bytes;
+
+    // Confirm the output script bytes are present
+    guardRead(scriptLength.number);
 
     const script = args.buffer.subarray(offset, offset + scriptLength.number);
 
@@ -144,12 +193,20 @@ module.exports = args => {
 
     offset += stackElementsCount.bytes;
 
+    // Confirm the data could possibly contain the claimed stack elements
+    if (stackElementsCount.number > args.buffer.length - offset) {
+      throw new Error('UnexpectedWitnessCountForTransactionDataLength');
+    }
+
     // Read in the witness stack elements
     const elements = [...Array(stackElementsCount.number).keys()].map(i => {
       // Stack elements are variable length
       const elementLength = decodeCompactInt(args.buffer, offset);
 
       offset += elementLength.bytes;
+
+      // Confirm the witness stack element bytes are present
+      guardRead(elementLength.number);
 
       const item = args.buffer.subarray(offset, offset + elementLength.number);
 
@@ -162,7 +219,14 @@ module.exports = args => {
     return inputs[i].witness = elements;
   });
 
+  // Witness serialization requires a non-empty witness on some input
+  if (isSegWit && !inputs.some(input => !!input.witness.length)) {
+    throw new Error('UnexpectedSuperfluousWitnessDataInTransaction');
+  }
+
   // The final element is the 4 byte transaction nLockTime
+  guardRead(byteCountInt32);
+
   const locktime = args.buffer.readUInt32LE(offset);
 
   offset += byteCountInt32;

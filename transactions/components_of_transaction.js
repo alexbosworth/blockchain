@@ -36,7 +36,14 @@ module.exports = ({transaction}) => {
     throw new Error('ExpectedHexEncodedTransactionToGetComponentsOf');
   }
 
-  const details = parseTransaction({buffer: hexAsBuffer(transaction)});
+  const buffer = hexAsBuffer(transaction);
+
+  const details = parseTransaction({buffer});
+
+  // Exit early with error when there is extra data after the transaction
+  if (details.bytes.length !== buffer.length) {
+    throw new Error('UnexpectedDataAfterTransactionToGetComponentsOf');
+  }
 
   return {
     inputs: details.inputs.map(input => ({
