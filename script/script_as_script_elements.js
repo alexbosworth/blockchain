@@ -1,4 +1,4 @@
-const parsePushBytesCount = require('./parse_push_bytes_count');
+const {parsePushBytesCount} = require('./../numbers');
 
 const hexAsBuffer = hex => Buffer.from(hex, 'hex');
 const isHex = n => n !== undefined && !(n.length%2) && /^[0-9A-F]*$/i.test(n);
