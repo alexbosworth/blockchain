@@ -24,6 +24,7 @@ const {scriptElementsAsScript} = require('./script');
 const {sizeOfTransaction} = require('./transactions');
 const {transactionFromComponents} = require('./transactions');
 const {unsignedTxFromPsbt} = require('./transactions');
+const {v0HashToSign} = require('./transactions');
 
 module.exports = {
   compactIntAsNumber,
@@ -52,4 +53,5 @@ module.exports = {
   sizeOfTransaction,
   transactionFromComponents,
   unsignedTxFromPsbt,
+  v0HashToSign,
 };

@@ -6,6 +6,7 @@ const queryTransactions = require('./query_transactions');
 const sizeOfTransaction = require('./size_of_transaction');
 const transactionFromComponents = require('./transaction_from_components');
 const unsignedTxFromPsbt = require('./unsigned_tx_from_psbt');
+const v0HashToSign = require('./v0_hash_to_sign');
 
 module.exports = {
   componentsOfTransaction,
@@ -16,4 +17,5 @@ module.exports = {
   sizeOfTransaction,
   transactionFromComponents,
   unsignedTxFromPsbt,
+  v0HashToSign,
 };

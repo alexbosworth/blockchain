@@ -1,5 +1,9 @@
 # Versions
 
+## 4.6.0
+
+- `v0HashToSign`: Add method to calculate the v0 witness hash to sign
+
 ## 4.5.3
 
 - `encodeBase58Address`: Add method to convert hash and version to b58 address
