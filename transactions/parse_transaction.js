@@ -12,10 +12,12 @@ const defaultLocktime = 0;
 const defaultStartIndex = 0;
 const defaultWitnessCount = 0;
 const {isBuffer} = Buffer;
+const maxTokens = BigInt(Number.MAX_SAFE_INTEGER);
 const minByteLengthInput = 41;
 const minByteLengthOutput = 9;
 const times = n => [...Array(n).keys()];
 const witnessFlagValue = 1;
+const zeroFlagValue = 0;
 
 /** Parse a raw transaction out of a buffer at a specific offset start
 
@@ -85,8 +87,10 @@ module.exports = args => {
   // The presence of the marker and flag indicates SegWit tx encoding
   const isSegWit = !marker && flag === witnessFlagValue;
 
-  // A zero marker byte requires the BIP 144 witness flag value to follow
-  if (!marker && !isSegWit) {
+  // A zero marker with a zero flag is the legacy encoding of an empty tx: the
+  // zero marker is an empty inputs count and the zero flag is an empty outputs
+  // count. Any other flag value following a zero marker is unknown data.
+  if (!marker && !isSegWit && flag !== zeroFlagValue) {
     throw new Error('UnexpectedWitnessFlagByteValueInTransaction');
   }
 
@@ -159,6 +163,11 @@ module.exports = args => {
     const value = args.buffer.readBigUInt64LE(offset);
 
     offset += byteCountInt64;
+
+    // Values beyond the safe integer range cannot be represented as a Number
+    if (value > maxTokens) {
+      throw new Error('UnexpectedOutputValueInTransaction');
+    }
 
     // The script being spent to has a variable length
     const scriptLength = decodeCompactInt(args.buffer, offset);

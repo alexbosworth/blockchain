@@ -105,6 +105,45 @@ const tests = [
   },
   {
     args: {
+      transaction: '0100000000' + '02' + '01000000000000000151' + '020000000000000000' + '00000000',
+    },
+    description: 'A zero marker with a non-witness non-zero flag is rejected',
+    error: 'UnexpectedWitnessFlagByteValueInTransaction',
+  },
+  {
+    args: {
+      transaction: '0100000001' + '00'.repeat(32) + 'ffffffff00ffffffff' + '01' + '0000000000002000' + '00' + '00000000',
+    },
+    description: 'A tx with an output value beyond safe integer range is rejected',
+    error: 'UnexpectedOutputValueInTransaction',
+  },
+  {
+    args: {
+      transaction: '0100000001' + '00'.repeat(32) + 'ffffffff00ffffffff' + '01' + 'ffffffffffff1f00' + '00' + '00000000',
+    },
+    description: 'A tx with the max safe integer output value is parsed',
+    expected: {
+      inputs: [{
+        id: '00'.repeat(32),
+        script: '',
+        sequence: 4294967295,
+        vout: 4294967295,
+        witness: undefined,
+      }],
+      locktime: 0,
+      outputs: [{script: '', tokens: 9007199254740991}],
+      version: 1,
+    },
+  },
+  {
+    args: {
+      transaction: '0100000000' + '00' + '00000000',
+    },
+    description: 'A zero inputs and zero outputs legacy tx is parsed',
+    expected: {inputs: [], locktime: 0, outputs: [], version: 1},
+  },
+  {
+    args: {
       transaction: '01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000',
     },
     description: 'A coinbase transaction is parsed',
