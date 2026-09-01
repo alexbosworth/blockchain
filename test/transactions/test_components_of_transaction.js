@@ -100,15 +100,20 @@ const tests = [
     args: {
       transaction: '010000000002010000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff010100000000000000000101510000' + '0000',
     },
-    description: 'A witness serialized tx with an unknown flag is rejected',
-    error: 'UnexpectedWitnessFlagByteValueInTransaction',
+    description: 'A zero marker with unknown flag is legacy and has extra data',
+    error: 'UnexpectedDataAfterTransactionToGetComponentsOf',
   },
   {
     args: {
       transaction: '0100000000' + '02' + '01000000000000000151' + '020000000000000000' + '00000000',
     },
-    description: 'A zero marker with a non-witness non-zero flag is rejected',
-    error: 'UnexpectedWitnessFlagByteValueInTransaction',
+    description: 'A zero inputs tx with a non-witness flag byte is parsed as legacy',
+    expected: {
+      inputs: [],
+      locktime: 0,
+      outputs: [{script: '51', tokens: 1}, {script: '', tokens: 2}],
+      version: 1,
+    },
   },
   {
     args: {

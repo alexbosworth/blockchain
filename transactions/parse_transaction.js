@@ -17,7 +17,6 @@ const minByteLengthInput = 41;
 const minByteLengthOutput = 9;
 const times = n => [...Array(n).keys()];
 const witnessFlagValue = 1;
-const zeroFlagValue = 0;
 
 /** Parse a raw transaction out of a buffer at a specific offset start
 
@@ -87,14 +86,8 @@ module.exports = args => {
   // The presence of the marker and flag indicates SegWit tx encoding
   const isSegWit = !marker && flag === witnessFlagValue;
 
-  // A zero marker with a zero flag is the legacy encoding of an empty tx: the
-  // zero marker is an empty inputs count and the zero flag is an empty outputs
-  // count. Any other flag value following a zero marker is unknown data.
-  if (!marker && !isSegWit && flag !== zeroFlagValue) {
-    throw new Error('UnexpectedWitnessFlagByteValueInTransaction');
-  }
-
-  // When tx isn't SegWit though, the bytes are not marker and flag
+  // When tx isn't SegWit though, the bytes are not marker and flag: a zero
+  // marker without the witness flag is a legacy tx with an empty inputs count
   offset += isSegWit ? byteCountMarkerFlag : byteCountNoMarkerFlag;
 
   const inputsCount = decodeCompactInt(args.buffer, offset);
