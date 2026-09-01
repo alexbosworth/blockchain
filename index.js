@@ -10,6 +10,7 @@ const {idForBlock} = require('./hashes');
 const {idForTransaction} = require('./transactions');
 const {idForTransactionComponents} = require('./hashes');
 const {noLocktimeIdForTransaction} = require('./transactions');
+const {nonWitnessHashToSign} = require('./transactions');
 const {numberAsCompactInt} = require('./numbers');
 const {p2msScript} = require('./script');
 const {p2pkhOutputScript} = require('./script');
@@ -39,6 +40,7 @@ module.exports = {
   idForTransaction,
   idForTransactionComponents,
   noLocktimeIdForTransaction,
+  nonWitnessHashToSign,
   numberAsCompactInt,
   p2msScript,
   p2pkhOutputScript,

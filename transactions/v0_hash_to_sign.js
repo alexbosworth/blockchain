@@ -4,28 +4,23 @@ const {numberAsCompactInt} = require('./../numbers');
 const {numberAsLittleEndian} = require('./../numbers');
 const parseTransaction = require('./parse_transaction');
 
-const {alloc} = Buffer;
 const anyOnePaysFlag = 0x80;
 const bufferAsHex = buffer => buffer.toString('hex');
-const byteCountHash = 32;
 const {concat} = Buffer;
 const defaultHashType = 0x01;
-const hash256 = preimage => sha256(sha256(preimage));
 const hashTypes = [0x01, 0x02, 0x03, 0x81, 0x82, 0x83];
 const hexAsBuffer = hex => Buffer.from(hex, 'hex');
-const int32 = number => littleEndian({number, bytes: 4, is_signed: true});
 const isHex = n => !!n && !(n.length % 2) && /^[0-9A-F]*$/i.test(n);
 const {isInteger} = Number;
 const isString = n => typeof n === 'string';
-const littleEndian = args => numberAsLittleEndian(args).encoded;
 const outputTypeMask = 0x1f;
 const sha256 = preimage => createHash('sha256').update(preimage).digest();
 const sigHashNone = 2;
 const sigHashSingle = 3;
 const sizeOf = script => numberAsCompactInt({number: script.length}).encoded;
-const uint32 = number => littleEndian({number, bytes: 4});
-const uint64 = number => littleEndian({number, bytes: 8});
-const zeroHash = alloc(byteCountHash);
+const uint32 = n => numberAsLittleEndian({bytes: 4, number: n}).encoded;
+const uint64 = n => numberAsLittleEndian({bytes: 8, number: n}).encoded;
+const zeroHash = Buffer.alloc(32);
 
 /** Calculate the v0 witness transaction hash to sign
 
@@ -36,7 +31,7 @@ const zeroHash = alloc(byteCountHash);
   For P2WSH the script code is the witness script
 
   {
-    script: <Signing Input Script Code Hex String>
+    script: <Signing Input Script Hex String>
     [sighash]: <Signature Hash Type Number>
     tokens: <Spending Output Tokens Number>
     transaction: <Raw Transaction Hex String>
@@ -95,19 +90,30 @@ module.exports = ({script, sighash, tokens, transaction, vin}) => {
 
   const spend = spending[vin];
 
+  // The transaction version number is a signed integer
+  const version = numberAsLittleEndian({
+    bytes: 4,
+    is_signed: true,
+    number: decoded.version,
+  });
+
   // Elements to hash over start with the signed transaction version number
-  const elements = [int32(decoded.version)];
+  const elements = [version.encoded];
 
   // Commit to all of the outpoints being spent unless anyone can pay
   if (!isAnyOnePays) {
-    elements.push(hash256(concat(spending.map(({outpoint}) => outpoint))));
+    const outpoints = spending.map(({outpoint}) => outpoint);
+
+    elements.push(sha256(sha256(concat(outpoints))));
   } else {
     elements.push(zeroHash);
   }
 
   // Commit to all input sequence numbers when signing for all outputs
   if (!isAnyOnePays && isAllOutputs) {
-    elements.push(hash256(concat(spending.map(({sequence}) => sequence))));
+    const sequences = spending.map(({sequence}) => sequence);
+
+    elements.push(sha256(sha256(concat(sequences))));
   } else {
     elements.push(zeroHash);
   }
@@ -127,14 +133,14 @@ module.exports = ({script, sighash, tokens, transaction, vin}) => {
       return concat([uint64(tokens), sizeOf(script), script]);
     });
 
-    elements.push(hash256(concat(outputs)));
+    elements.push(sha256(sha256(concat(outputs))));
   } else if (outputType === sigHashSingle && !!output) {
     // Commit to the matching output when signing for a single output
-    elements.push(hash256(concat([
+    elements.push(sha256(sha256(concat([
       uint64(output.tokens),
       sizeOf(output.script),
       output.script,
-    ])));
+    ]))));
   } else {
     // There are no outputs committed to when signing for none
     elements.push(zeroHash);
@@ -145,5 +151,5 @@ module.exports = ({script, sighash, tokens, transaction, vin}) => {
   elements.push(uint32(hashType));
 
   // The hash to sign is the double sha256 hash of the elements
-  return {hash: bufferAsHex(hash256(concat(elements)))};
+  return {hash: bufferAsHex(sha256(sha256(concat(elements))))};
 };

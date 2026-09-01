@@ -1,6 +1,7 @@
 const componentsOfTransaction = require('./components_of_transaction');
 const idForTransaction = require('./id_for_transaction');
 const noLocktimeIdForTransaction = require('./no_locktime_id_for_transaction');
+const nonWitnessHashToSign = require('./non_witness_hash_to_sign');
 const parseTransaction = require('./parse_transaction');
 const queryTransactions = require('./query_transactions');
 const sizeOfTransaction = require('./size_of_transaction');
@@ -12,6 +13,7 @@ module.exports = {
   componentsOfTransaction,
   idForTransaction,
   noLocktimeIdForTransaction,
+  nonWitnessHashToSign,
   parseTransaction,
   queryTransactions,
   sizeOfTransaction,

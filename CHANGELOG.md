@@ -1,5 +1,9 @@
 # Versions
 
+## 4.7.0
+
+- `nonWitnessHashToSign`: Add method to calculate the pre-SegWit hash to sign
+
 ## 4.6.0
 
 - `v0HashToSign`: Add method to calculate the v0 witness hash to sign

@@ -16,6 +16,7 @@ Utility methods for working with Blockchain data
 - [idForTransaction](#idfortransaction)
 - [idForTransactionComponents](#idfortransactioncomponents)
 - [noLocktimeIdForTransaction](#nolocktimeidfortransaction)
+- [nonWitnessHashToSign](#nonwitnesshashtosign)
 - [numberAsCompactInt](#numberascompactint)
 - [p2msScript](#p2msscript)
 - [p2pkhOutputScript](#p2pkhoutputscript)
@@ -296,6 +297,34 @@ Get an id for a transaction with witness data and mlocktime not included
       id: <No nLockTime Transaction Id Hex String>
     }
 
+### nonWitnessHashToSign
+
+Calculate the pre-SegWit transaction hash to sign
+
+For P2PK, P2PKH, or bare multisig the script is the output script being spent
+
+For P2SH the script is the redeem script that hashes to the output script
+
+When a code separator was executed, pass only the script following it, any
+remaining code separators are removed from the script before hashing
+
+Signing for a single output requires an output matching the input index
+
+    {
+      script: <Signing Input Script Hex String>
+      [sighash]: <Signature Hash Type Number>
+      transaction: <Raw Transaction Hex String>
+      vin: <Signing Transaction Input Index Number>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      hash: <Hash to Sign Hex String>
+    }
+
 ### numberAsCompactInt
 
 Convert a number to compact size integer serialization
@@ -566,7 +595,7 @@ For P2WPKH the script code is the P2PKH script of the public key hash
 For P2WSH the script code is the witness script
 
     {
-      script: <Signing Input Script Code Hex String>
+      script: <Signing Input Script Hex String>
       [sighash]: <Signature Hash Type Number>
       tokens: <Spending Output Tokens Number>
       transaction: <Raw Transaction Hex String>
