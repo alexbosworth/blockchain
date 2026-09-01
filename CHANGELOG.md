@@ -1,6 +1,6 @@
 # Versions
 
-## 4.7.1
+## 4.7.2
 
 - `nonWitnessHashToSign`: Add method to calculate the pre-SegWit hash to sign
 
