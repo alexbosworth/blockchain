@@ -6,6 +6,7 @@ Utility methods for working with Blockchain data
 
 - [compactIntAsNumber](#compactintasnumber)
 - [componentsOfTransaction](#componentsoftransaction)
+- [decodeBase58](#decodebase58)
 - [decodeBase58Address](#decodebase58address)
 - [decodeBech32Address](#decodebech32address)
 - [encodeBase58Address](#encodebase58address)
@@ -83,6 +84,22 @@ Get the components of a hex-encoded transaction
         tokens: <Tokens Count Number>
       }]
       version: <Version Number>
+    }
+
+### decodeBase58
+
+Decode a base58check encoded string into its payload
+
+    {
+      encoded: <Base58Check Encoded String>
+    }
+
+    @throws
+    <Error> when the string has invalid characters or a bad checksum
+
+    @returns
+    {
+      payload: <Decoded Payload Buffer Object>
     }
 
 ### decodeBase58Address

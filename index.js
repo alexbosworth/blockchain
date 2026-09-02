@@ -1,5 +1,6 @@
 const {compactIntAsNumber} = require('./numbers');
 const {componentsOfTransaction} = require('./transactions');
+const {decodeBase58} = require('./addresses');
 const {decodeBase58Address} = require('./addresses');
 const {decodeBech32Address} = require('./addresses');
 const {encodeBase58Address} = require('./addresses');
@@ -30,6 +31,7 @@ const {v0HashToSign} = require('./transactions');
 module.exports = {
   compactIntAsNumber,
   componentsOfTransaction,
+  decodeBase58,
   decodeBase58Address,
   decodeBech32Address,
   encodeBase58Address,

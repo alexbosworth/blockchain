@@ -1,5 +1,9 @@
 # Versions
 
+## 4.8.0
+
+- `decodeBase58`: Add method to decode a base58check string into its payload
+
 ## 4.7.2
 
 - `nonWitnessHashToSign`: Add method to calculate the pre-SegWit hash to sign
