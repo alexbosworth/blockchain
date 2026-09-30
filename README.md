@@ -19,6 +19,7 @@ Utility methods for working with Blockchain data
 - [noLocktimeIdForTransaction](#nolocktimeidfortransaction)
 - [nonWitnessHashToSign](#nonwitnesshashtosign)
 - [numberAsCompactInt](#numberascompactint)
+- [outputScriptForAddress](#outputscriptforaddress)
 - [p2msScript](#p2msscript)
 - [p2pkhOutputScript](#p2pkhoutputscript)
 - [p2shOutputScript](#p2shoutputscript)
@@ -357,6 +358,39 @@ Convert a number to compact size integer serialization
     {
       encoded: <Serialized Compact Integer Buffer Object>
     }
+
+### outputScriptForAddress
+
+Get the output script for an address
+
+Supported addresses: P2PKH, P2SH, P2WPKH, P2WSH, P2TR, future segwit versions
+
+Supported networks: btc, btcregtest, btcsignet, btctestnet
+
+    {
+      address: <Address String>
+      network: <Network Name String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      script: <Output Script Hex String>
+    }
+
+Example:
+
+```node
+const {outputScriptForAddress} = require('@alexbosworth/blockchain');
+
+// Get the output script to pay to an address
+const {script} = outputScriptForAddress({
+  address: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4',
+  network: 'btc',
+});
+```
 
 ### p2msScript
 

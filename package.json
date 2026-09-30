@@ -1,7 +1,7 @@
 {
   "author": {
     "name": "Alex Bosworth",
-    "url": "https://twitter.com/alexbosworth"
+    "url": "https://x.com/alexbosworth"
   },
   "bugs": {
     "url": "https://github.com/alexbosworth/blockchain/issues"
@@ -10,6 +10,16 @@
   "engines": {
     "node": ">=22"
   },
+  "files": [
+    "5bit",
+    "addresses",
+    "CHANGELOG.md",
+    "hashes",
+    "index.js",
+    "numbers",
+    "script",
+    "transactions"
+  ],
   "license": "MIT",
   "name": "@alexbosworth/blockchain",
   "repository": {
@@ -19,5 +29,5 @@
   "scripts": {
     "test": "node --experimental-test-coverage --test test/5bit/*.js test/addresses/*.js test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
   },
-  "version": "4.8.0"
+  "version": "4.9.0"
 }

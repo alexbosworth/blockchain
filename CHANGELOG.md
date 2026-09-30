@@ -1,5 +1,9 @@
 # Versions
 
+## 4.9.0
+
+- `outputScriptForAddress`: Add method to get the output script for an address
+
 ## 4.8.0
 
 - `decodeBase58`: Add method to decode a base58check string into its payload

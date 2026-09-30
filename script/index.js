@@ -1,3 +1,4 @@
+const outputScriptForAddress = require('./output_script_for_address');
 const p2msScript = require('./p2ms_script');
 const p2pkhOutputScript = require('./p2pkh_output_script');
 const p2shOutputScript = require('./p2sh_output_script');
@@ -8,6 +9,7 @@ const scriptAsScriptElements = require('./script_as_script_elements');
 const scriptElementsAsScript = require('./script_elements_as_script');
 
 module.exports = {
+  outputScriptForAddress,
   p2msScript,
   p2pkhOutputScript,
   p2shOutputScript,
