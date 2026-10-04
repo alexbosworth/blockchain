@@ -1,5 +1,9 @@
 # Versions
 
+## 4.10.0
+
+- `outputScriptForAddress`: Add support for `btctestnet4` network
+
 ## 4.9.0
 
 - `outputScriptForAddress`: Add method to get the output script for an address

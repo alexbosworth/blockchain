@@ -18,5 +18,10 @@
     "bech32": "tb",
     "p2pkh": 111,
     "p2sh": 196
+  },
+  "btctestnet4": {
+    "bech32": "tb",
+    "p2pkh": 111,
+    "p2sh": 196
   }
 }

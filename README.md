@@ -365,7 +365,7 @@ Get the output script for an address
 
 Supported addresses: P2PKH, P2SH, P2WPKH, P2WSH, P2TR, future segwit versions
 
-Supported networks: btc, btcregtest, btcsignet, btctestnet
+Supported networks: btc, btcregtest, btcsignet, btctestnet, btctestnet4
 
     {
       address: <Address String>

@@ -40,6 +40,14 @@ const tests = [
   },
   {
     args: {
+      address: '16ro3Jptwo4asSevZnsRX6vfRS24TGE6uK',
+      network: 'btctestnet4',
+    },
+    description: 'A mainnet base58 address is not a testnet4 address',
+    error: 'UnexpectedBase58AddressVersionForNetwork',
+  },
+  {
+    args: {
       address: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kemeawh',
       network: 'btc',
     },
@@ -60,6 +68,14 @@ const tests = [
       network: 'btcregtest',
     },
     description: 'A mainnet bech32 address is not a regtest address',
+    error: 'UnexpectedBech32AddressPrefixForNetwork',
+  },
+  {
+    args: {
+      address: 'bcrt1qw508d6qejxtdg4y5r3zarvary0c5xw7kygt080',
+      network: 'btctestnet4',
+    },
+    description: 'A regtest bech32 address is not a testnet4 address',
     error: 'UnexpectedBech32AddressPrefixForNetwork',
   },
   {
@@ -172,6 +188,52 @@ const tests = [
       network: 'btctestnet',
     },
     description: 'A p2tr output script is derived for a testnet address',
+    expected: {
+      script: '5120000000c4a5cad46221b2a187905e5266362b99d5e91c6ce24d165dab93e86433',
+    },
+  },
+  {
+    args: {
+      address: 'mipcBbFg9gMiCh81Kj8tqqdgoZub1ZJRfn',
+      network: 'btctestnet4',
+    },
+    description: 'A p2pkh output script is derived for a testnet4 address',
+    expected: {
+      script: '76a914243f1394f44554f4ce3fd68649c19adc483ce92488ac',
+    },
+  },
+  {
+    args: {
+      address: '2N3oefVeg6stiTb5Kh3ozCSkaqmx91FDbsm',
+      network: 'btctestnet4',
+    },
+    description: 'A p2sh output script is derived for a testnet4 address',
+    expected: {script: 'a91473d32ac9e4330a071ee1b3a9ccf3997bdd4174d087'},
+  },
+  {
+    args: {
+      address: 'tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx',
+      network: 'btctestnet4',
+    },
+    description: 'A p2wpkh output script is derived for a testnet4 address',
+    expected: {script: '0014751e76e8199196d454941c45d1b3a323f1433bd6'},
+  },
+  {
+    args: {
+      address: 'tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3q0sl5k7',
+      network: 'btctestnet4',
+    },
+    description: 'A p2wsh output script is derived for a testnet4 address',
+    expected: {
+      script: '00201863143c14c5166804bd19203356da136c985678cd4d27a1b8c6329604903262',
+    },
+  },
+  {
+    args: {
+      address: 'tb1pqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesf3hn0c',
+      network: 'btctestnet4',
+    },
+    description: 'A p2tr output script is derived for a testnet4 address',
     expected: {
       script: '5120000000c4a5cad46221b2a187905e5266362b99d5e91c6ce24d165dab93e86433',
     },
