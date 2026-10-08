@@ -1,0 +1,17 @@
+{
+  "btc": {
+    "wif": 128
+  },
+  "btcregtest": {
+    "wif": 239
+  },
+  "btcsignet": {
+    "wif": 239
+  },
+  "btctestnet": {
+    "wif": 239
+  },
+  "btctestnet4": {
+    "wif": 239
+  }
+}

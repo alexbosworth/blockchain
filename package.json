@@ -16,6 +16,7 @@
     "CHANGELOG.md",
     "hashes",
     "index.js",
+    "keys",
     "numbers",
     "script",
     "transactions"
@@ -27,7 +28,7 @@
     "url": "git+https://github.com/alexbosworth/blockchain.git"
   },
   "scripts": {
-    "test": "node --experimental-test-coverage --test test/5bit/*.js test/addresses/*.js test/hashes/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
+    "test": "node --experimental-test-coverage --test test/5bit/*.js test/addresses/*.js test/hashes/*.js test/keys/*.js test/numbers/*.js test/script/*.js test/transactions/*.js"
   },
-  "version": "4.10.0"
+  "version": "4.11.0"
 }

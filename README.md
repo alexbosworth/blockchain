@@ -9,6 +9,7 @@ Utility methods for working with Blockchain data
 - [decodeBase58](#decodebase58)
 - [decodeBase58Address](#decodebase58address)
 - [decodeBech32Address](#decodebech32address)
+- [decodeWif](#decodewif)
 - [encodeBase58Address](#encodebase58address)
 - [encodeBech32Address](#encodebech32address)
 - [hashForP2pkh](#hashforp2pkh)
@@ -137,6 +138,54 @@ Decode a bech32 address string to derive the address details
       program: <Output Data Buffer Object>
       version: <Witness Version Number>
     }
+
+### decodeWif
+
+Decode a WIF encoded private key
+
+Derive the public key in compressed form when `is_compressed` is true
+
+When a network is not specified, a WIF for any known network is accepted
+
+Supported networks: btc, btcregtest, btcsignet, btctestnet, btctestnet4
+
+    {
+      [network]: <Network Name String>
+      wif: <WIF Encoded Private Key String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      is_compressed: <Public Key Is Compressed Bool>
+      private_key: <Private Key Buffer Object>
+    }
+
+Example:
+
+```node
+const {createECDH} = require('node:crypto');
+
+const {decodeWif} = require('@alexbosworth/blockchain');
+
+// Decode the private key and the public key compression from a mainnet WIF
+const {is_compressed, private_key} = decodeWif({
+  network: 'btc',
+  wif: 'KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617',
+});
+
+// The WIF signals if the public key is compressed or uncompressed
+const format = is_compressed ? 'compressed' : 'uncompressed';
+
+const ecdh = createECDH('secp256k1');
+
+// Derive the public key from the private key
+ecdh.setPrivateKey(private_key);
+
+const publicKey = ecdh.getPublicKey(null, format);
+```
 
 ### encodeBase58Address
 

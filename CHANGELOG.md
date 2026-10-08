@@ -1,5 +1,9 @@
 # Versions
 
+## 4.11.0
+
+- `decodeWif`: Add method to decode a WIF encoded private key
+
 ## 4.10.0
 
 - `outputScriptForAddress`: Add support for `btctestnet4` network

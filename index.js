@@ -3,6 +3,7 @@ const {componentsOfTransaction} = require('./transactions');
 const {decodeBase58} = require('./addresses');
 const {decodeBase58Address} = require('./addresses');
 const {decodeBech32Address} = require('./addresses');
+const {decodeWif} = require('./keys');
 const {encodeBase58Address} = require('./addresses');
 const {encodeBech32Address} = require('./addresses');
 const {hashForP2pkh} = require('./hashes');
@@ -35,6 +36,7 @@ module.exports = {
   decodeBase58,
   decodeBase58Address,
   decodeBech32Address,
+  decodeWif,
   encodeBase58Address,
   encodeBech32Address,
   hashForP2pkh,
