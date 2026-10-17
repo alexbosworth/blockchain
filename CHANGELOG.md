@@ -1,5 +1,10 @@
 # Versions
 
+## 4.12.0
+
+- `queryTransactions`: Add `ids` argument to find transactions by their id
+- `queryTransactions`: Add `transactions` result with raw matching transactions
+
 ## 4.11.0
 
 - `decodeWif`: Add method to decode a WIF encoded private key

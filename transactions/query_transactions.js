@@ -1,5 +1,3 @@
-const {createHash} = require('crypto');
-
 const {compactIntAsNumber} = require('./../numbers');
 
 const {idForTransactionComponents} = require('./../hashes');
@@ -8,6 +6,7 @@ const parseTransaction = require('./parse_transaction');
 const bufferAsHex = buffer => buffer.toString('hex');
 const hexAsBuffer = hex => Buffer.from(hex, 'hex');
 const {isArray} = Array;
+const isTxId = n => typeof n === 'string' && /^[0-9A-F]{64}$/i.test(n);
 const minTxByteLength = 60;
 const transactionsStartIndex = 80;
 
@@ -15,7 +14,8 @@ const transactionsStartIndex = 80;
 
   {
     block: <Hex Encoded Raw Block String>
-    outputs: [<Output Script Hex String>]
+    [ids]: [<Transaction Id Hex String>]
+    [outputs]: [<Output Script Hex String>]
   }
 
   @throws
@@ -29,15 +29,31 @@ const transactionsStartIndex = 80;
       transaction_id: <Transaction Id Hex String>
       transaction_vout: <Transaction Output Index Number>
     }]
+    transactions: [{
+      id: <Transaction Id Hex String>
+      transaction: <Hex Encoded Raw Transaction String>
+    }]
   }
 */
-module.exports = ({block, outputs}) => {
+module.exports = ({block, ids, outputs}) => {
   if (!block) {
     throw new Error('ExpectedHexEncodedBlockToQueryTransactions');
   }
 
-  if (!isArray(outputs)) {
+  if (ids === undefined && outputs === undefined) {
+    throw new Error('ExpectedTransactionIdsOrOutputsToQueryTransactions');
+  }
+
+  if (outputs !== undefined && !isArray(outputs)) {
     throw new Error('ExpectedArrayOfOutputsToQueryTransactionsInBlock');
+  }
+
+  if (ids !== undefined && !isArray(ids)) {
+    throw new Error('ExpectedArrayOfIdsToQueryTransactionsInBlock');
+  }
+
+  if (!!ids && !ids.every(isTxId)) {
+    throw new Error('ExpectedTransactionIdHexStringToQueryTransactions');
   }
 
   const buffer = hexAsBuffer(block);
@@ -54,8 +70,12 @@ module.exports = ({block, outputs}) => {
   });
 
   let cursor = transactionsStartIndex + txCount.bytes;
+  const found = new Set();
   const hits = [];
+  const pendingIds = new Set((ids || []).map(id => id.toLowerCase()));
   let remaining = txCount.number;
+  const scripts = outputs || [];
+  const transactions = [];
 
   // Confirm the data could possibly contain the claimed count of txs
   if (txCount.number * minTxByteLength > buffer.length - cursor) {
@@ -66,31 +86,61 @@ module.exports = ({block, outputs}) => {
   while (remaining--) {
     const tx = parseTransaction({buffer, start: cursor});
 
+    cursor += tx.bytes.length;
+
+    const matches = [];
+
     // Look at the transaction outputs to see if there is a match
-    const matches = tx.outputs.forEach((output, vout) => {
+    tx.outputs.forEach((output, vout) => {
+      const script = bufferAsHex(output.script);
+
       // Exit early when the script isn't included in the outputs
-      if (!outputs.includes(bufferAsHex(output.script))) {
+      if (!scripts.includes(script)) {
         return;
       }
 
-      // Calculate the transaction id
-      const {id} = idForTransactionComponents({
-        inputs: tx.inputs,
-        locktime: tx.locktime,
-        outputs: tx.outputs,
-        version: tx.version,
-      });
+      return matches.push({script, vout, tokens: output.tokens});
+    });
 
-      // Add the output to found hits
+    // Exit early when there are no output hits and no more ids to look for
+    if (!matches.length && !pendingIds.size) {
+      continue;
+    }
+
+    // Calculate the transaction id
+    const {id} = idForTransactionComponents({
+      inputs: tx.inputs,
+      locktime: tx.locktime,
+      outputs: tx.outputs,
+      version: tx.version,
+    });
+
+    // Add the matching outputs to found hits
+    matches.forEach(({script, tokens, vout}) => {
       return hits.push({
-        script: bufferAsHex(output.script),
-        tokens: output.tokens,
+        script,
+        tokens,
         transaction_id: id,
         transaction_vout: vout,
       });
     });
 
-    cursor += tx.bytes.length;
+    // Exit early when the transaction was already found in the block
+    if (found.has(id)) {
+      continue;
+    }
+
+    // Exit early when the transaction matches neither an output nor an id
+    if (!matches.length && !pendingIds.has(id)) {
+      continue;
+    }
+
+    found.add(id);
+
+    pendingIds.delete(id);
+
+    // Add the transaction to found transactions
+    transactions.push({id, transaction: bufferAsHex(tx.bytes)});
   }
 
   // Exit early with error when there is extra data after the transactions
@@ -98,5 +148,5 @@ module.exports = ({block, outputs}) => {
     throw new Error('UnexpectedDataAfterBlockTransactions');
   }
 
-  return {outputs: hits};
+  return {transactions, outputs: hits};
 };

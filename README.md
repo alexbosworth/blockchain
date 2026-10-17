@@ -575,7 +575,8 @@ Find matching transactions within a block
 
     {
       block: <Hex Encoded Raw Block String>
-      outputs: [<Output Script Hex String>]
+      [ids]: [<Transaction Id Hex String>]
+      [outputs]: [<Output Script Hex String>]
     }
 
     @throws
@@ -588,6 +589,10 @@ Find matching transactions within a block
         tokens: <Output Value Number>
         transaction_id: <Transaction Id Hex String>
         transaction_vout: <Transaction Output Index Number>
+      }]
+      transactions: [{
+        id: <Transaction Id Hex String>
+        transaction: <Hex Encoded Raw Transaction String>
       }]
     }
 
